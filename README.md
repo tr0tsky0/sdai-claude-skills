@@ -67,12 +67,25 @@ sd-image-prompts.skill               # Packaged skill — upload directly to Cla
 The `.skill` files are zip archives of each skill directory. To rebuild after editing:
 
 ```powershell
-# Windows PowerShell (Compress-Archive doesn't support .skill extension — use .NET directly)
-Add-Type -Assembly System.IO.Compression.FileSystem
-Remove-Item sd-character-gen.skill -Force
-[System.IO.Compression.ZipFile]::CreateFromDirectory((Resolve-Path "sd-character-gen").Path, (Join-Path (Get-Location) "sd-character-gen.skill"))
-Remove-Item sd-image-prompts.skill -Force
-[System.IO.Compression.ZipFile]::CreateFromDirectory((Resolve-Path "sd-image-prompts").Path, (Join-Path (Get-Location) "sd-image-prompts.skill"))
+# Windows PowerShell
+# Note: Compress-Archive doesn't support .skill extension, and ZipFile.CreateFromDirectory
+# stores backslash paths on Windows which Claude.ai rejects. Build entries manually instead.
+Add-Type -Assembly System.IO.Compression
+$root = (Get-Location).Path
+foreach ($skill in @("sd-character-gen", "sd-image-prompts")) {
+    $src = "$root\$skill"; $tmp = "$root\$skill.skill.tmp"; $dest = "$root\$skill.skill"
+    $s = [System.IO.File]::Open($tmp, [System.IO.FileMode]::Create)
+    $z = New-Object System.IO.Compression.ZipArchive($s, [System.IO.Compression.ZipArchiveMode]::Create, $false)
+    Get-ChildItem -Path $src -Recurse -File | ForEach-Object {
+        $rel = $_.FullName.Substring($src.Length + 1).Replace('\', '/')
+        $e = $z.CreateEntry($rel, [System.IO.Compression.CompressionLevel]::Optimal)
+        $es = $e.Open(); $b = [System.IO.File]::ReadAllBytes($_.FullName)
+        $es.Write($b, 0, $b.Length); $es.Close()
+    }
+    $z.Dispose(); $s.Close()
+    [System.IO.File]::Copy($tmp, $dest, $true); [System.IO.File]::Delete($tmp)
+    Write-Output "Built $skill.skill"
+}
 ```
 
 ```bash
