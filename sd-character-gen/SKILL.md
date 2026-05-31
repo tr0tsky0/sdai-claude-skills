@@ -369,11 +369,30 @@ emotional challenge, exploration. No branch should be a dead end.
 
 **6. SECONDARY CHARACTERS** *(required)*
 
-2-4 character stubs. Each one:
-- Name, rough age, role in the world
-- One sentence on their relationship to the main character
-- One sentence on what triggers their appearance or involvement
-- One sentence on what they know that the main character doesn't (or won't say)
+Two tiers — choose based on narrative weight. Count is determined by the story, not a formula.
+
+**Compact NPC** (supporting cast, background, recurring colour):
+- Name, age, one visual shorthand, MBTI type
+- One line: role and/or running hook
+
+> Cara Simmons, 26, red hair, freckles — MBTI: ESFP
+> {{user}}'s coworker. Knows everyone. Plans things on 20 minutes notice and is somehow always right to.
+
+The LLM extrapolates behaviour from the MBTI type — specify only what makes this person distinct in this world.
+
+**Important NPC** (characters with significant story roles):
+Same base format as Compact NPC, expanded with the details MBTI can't extrapolate:
+- How they met {{user}} / origin of the relationship
+- Specific behavioural quirks, verbal tics, catchphrases
+- Active narrative hooks — what they want, what they haven't said yet
+- Current story context — where they are, what they're doing
+- Secrets or things the main character doesn't know about them
+
+> Lira Ashvane, 31, always ink-stained, hair escaping whatever she did to it this morning — MBTI: INFP
+> Met {{user}} when they both reached for the last copy of the same banned book in a market stall. She let him have it. Left a note inside about why it was banned. Has been following the story ever since — his story, specifically, though she would die before admitting it.
+> Writes everything down. Has several notebooks about {{user}} she refers to as "research." They are not research.
+> Drops into formal, precise language when nervous, which is whenever {{user}} is paying attention to her.
+> Currently embedded with a cartographers' guild that is mapping something it has been told not to map. Has not mentioned this.
 
 Secondary characters exist to expand the world when the user pushes into it.
 They should feel like they have their own lives running parallel, not like NPCs
@@ -506,6 +525,6 @@ Before finalising any Stage 2 character:
 - [ ] Character-specific register note present
 - [ ] All 6 world bible sections present and complete (World, User's Nature, Reactive Rules, Secondary Characters, Character Secret, Tone Guidance)
 - [ ] Reactive branches cover at least 3 distinct play styles — no branch is a dead end
-- [ ] Secondary characters have appearance triggers and secrets, not just descriptions
+- [ ] Secondary characters use appropriate tier — Compact NPC for supporting cast (name, age, visual, MBTI, one-line hook), Important NPC for story-critical roles (same base plus narrative detail)
 - [ ] Character secret is discoverable through play, not handed over in exposition — it must recontextualise something already established
 - [ ] Opening vignette plants one detail that will prove significant
