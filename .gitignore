@@ -7,3 +7,6 @@ $RECYCLE.BIN/
 .vscode/
 *.swp
 *~
+
+# Local only
+CLAUDE.md
