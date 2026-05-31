@@ -67,9 +67,12 @@ sd-image-prompts.skill               # Packaged skill — upload directly to Cla
 The `.skill` files are zip archives of each skill directory. To rebuild after editing:
 
 ```powershell
-# Windows PowerShell
-Compress-Archive -Path sd-character-gen\* -DestinationPath sd-character-gen.skill -Force
-Compress-Archive -Path sd-image-prompts\* -DestinationPath sd-image-prompts.skill -Force
+# Windows PowerShell (Compress-Archive doesn't support .skill extension — use .NET directly)
+Add-Type -Assembly System.IO.Compression.FileSystem
+Remove-Item sd-character-gen.skill -Force
+[System.IO.Compression.ZipFile]::CreateFromDirectory((Resolve-Path "sd-character-gen").Path, (Join-Path (Get-Location) "sd-character-gen.skill"))
+Remove-Item sd-image-prompts.skill -Force
+[System.IO.Compression.ZipFile]::CreateFromDirectory((Resolve-Path "sd-image-prompts").Path, (Join-Path (Get-Location) "sd-image-prompts.skill"))
 ```
 
 ```bash
