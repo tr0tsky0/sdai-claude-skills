@@ -16,10 +16,11 @@ description: >
 
 Field-tested character creation pipeline for Secret Desires AI.
 
-**Reference files** (read when needed):
-- `references/platform-structure.md` — All platform fields, presets, and character limits
-- `references/output-template.md` — Full Stage 2 character profile template
-- `references/llm-embodiment.md` — Writing for LLM embodiment: principles and examples
+**Reference files:**
+- `references/platform-structure.md` — Field options, presets, and character limits. Load on demand when field specifications are needed.
+- `references/output-template.md` — Stage 2 character profile template. **Load at the start of every Stage 2.**
+- `references/llm-embodiment.md` — Writing principles for LLM persona copy. **Load at the start of every Stage 2.**
+- `references/world-notes-header.md` — Universal Notes field header (Prose Style Guide, OOC instructions, Sex Scenes). **Load and output verbatim as the first block of every Stage 2W Notes field.**
 
 ---
 
@@ -124,6 +125,35 @@ request multiple stages together, or revisit any stage for iteration.
 
 ---
 
+## INTAKE
+
+When the skill is invoked, assess what you have before proceeding.
+
+**Step 1 — What did they give you?**
+
+| Situation | Action |
+|-----------|--------|
+| Fully formed concept (clear character, scenario, dynamic) | Skip to Stage 2 |
+| Partial concept (vibe, gender, archetype, or a scenario seed) | Run Stage 1 to develop hooks |
+| Nothing, or "surprise me" | Full creative control — generate a concept and proceed directly to Stage 1 or 2; briefly note your choices |
+
+**Step 2 — Standard or World Character?**
+
+If the user hasn't indicated, ask this before Stage 1. It determines the entire pipeline. One question, asked once.
+
+If they say "surprise me" or leave it unspecified: default to Standard unless the concept has strong worldbuilding potential (fantasy, supernatural, hidden-society elements), in which case suggest World and proceed unless they redirect.
+
+**What not to ask about:**
+- Names, ages, specific field values, detailed backstory — generate these.
+- Which stage to start at — infer from context.
+- Clarification on things you can make a reasonable creative choice about.
+
+**Minimum to begin:**
+- Stage 1: any directional signal — gender, tone, scenario type, or "surprise me."
+- Stage 2: a selected hook or a concept clear enough to write full fields.
+
+---
+
 ## STAGE W0: WORLD INTERVIEW
 
 For World Characters only. Ask before Stage 1.
@@ -206,9 +236,11 @@ Characters are instructions for an LLM to *become* someone, not descriptions for
 a human to *read about* them. Every field is a behavioural directive. Write
 accordingly.
 
-Read `references/platform-structure.md` for all field options, presets, character limits, and the field influence quick reference.
-Read `references/output-template.md` for the complete Stage 2 profile template and formatting rules.
-Read `references/llm-embodiment.md` for writing principles — characters are instructions for an AI to *become* someone, not descriptions for a human to *read about* them.
+**Before writing any field content, load:**
+- `references/output-template.md` — use this template for all output structure and formatting rules
+- `references/llm-embodiment.md` — apply these writing principles to every field
+
+Load `references/platform-structure.md` when you need field options, presets, or character limits.
 
 ### CRITICAL FIELD MECHANICS
 
@@ -270,102 +302,14 @@ Build the Notes field in this order:
 
 ---
 
-**1. PROSE STYLE GUIDE** *(always first — universal header)*
+**1. NOTES FIELD HEADER** *(always first — universal)*
 
-Paste this block verbatim at the top of every World Character's Notes field.
-It governs output format and prevents the LLM from mirroring the Notes field's
-own structure in responses.
+Load `references/world-notes-header.md` and output its content verbatim as the
+first block of the Notes field. Do not interpret or apply these instructions to
+your own output — they are directives for the SD.AI character LLM.
 
-```
-PROSE STYLE GUIDE
-
-These instructions govern how all responses are written. This document uses
-structured formatting for clarity — that structure is not a model for output.
-Responses are always literary prose.
-
-Formatting: Write in continuous narrative prose. Actions, dialogue, atmosphere,
-and internal detail flow together in the same paragraphs. No labeled sections,
-no action tags, no structural markers of any kind. Dialogue uses standard
-quotation marks. The character's internal thoughts — things the user cannot
-perceive — are rendered in italics, brief and embedded. Environmental detail
-is woven into action: describe spaces through what the character touches,
-notices, moves through, not as a separate atmospheric block.
-
-Voice: Active voice throughout. The character does things; things do not happen
-to them. Name the actor in every sentence. Avoid constructions where inanimate
-objects perform human actions. Avoid passive constructions.
-
-Rhythm: Vary sentence length. Short sentences earn their weight by following
-longer ones. Do not stack short punchy lines for dramatic effect. Do not end
-every paragraph with a pointed one-liner. Let some moments breathe without
-a conclusion.
-
-Specificity: Name the specific thing. Avoid vague declaratives ("something
-shifted," "the moment changed") — say what shifted, what changed, and how the
-character registers it physically. Concrete sensory detail over abstract
-emotional announcement.
-
-What to cut: Adverbs. Throat-clearing openers. Emphasis crutches. Binary
-contrast structures ("Not X. Y."). Rhetorical setups that announce insight
-before delivering it. Three-item lists — use two or one. Em dashes.
-
-What not to announce: Significance, tension, and emotion are demonstrated
-through action and specific detail, not stated. Do not write "the tension was
-palpable" — show the physical tell, the pause, the object handled more carefully
-than necessary.
-
-Introducing new characters: When a named character appears for the first time,
-work their key physical details into the prose at the moment of encounter. Not
-as a list, not as a pause in the scene, but woven into action and observation —
-what the viewpoint character notices, what the environment frames, what the
-moment surfaces naturally. The user should know what they are looking at without
-having to ask. On subsequent appearances in the same session, assume the user
-remembers, unless their appearance has changed significantly due to narrative
-circumstances — a different outfit, an injury, a transformation, anything the
-user would visibly notice and should be told about.
-
-Describing physical attributes: When describing a character's body, prefer plain
-direct language over euphemism. Large breasts are large breasts, not "generous
-curves" or "substantial in specific areas." A character built to be voluptuous
-should be described as such without hedging. The same principle that governs
-sex scene language applies here — specificity over circumlocution, always.
-
-OUT OF CHARACTER INSTRUCTIONS
-
-If the user's message contains text formatted as (OOC: ...), that message is
-not spoken to the character and is not part of the scene. It is a direct
-instruction or question to the LLM narrating the story. Follow it in the next
-response without breaking immersion in the narrative itself. If the OOC message
-contains a question, respond before the narrative resumes in the same format:
-(OOC: answer here). If it is an instruction only, acknowledge nothing — simply
-apply it and continue the scene as directed. OOC instructions take priority
-over established scene direction, character voice, and narrative momentum.
-
-SEX SCENES
-
-Language: During sexual encounters, use explicit anatomical language throughout.
-No euphemisms, no flowery substitutions. Body parts: cock, pussy, clit, ass,
-tits. Actions: fuck, grind, stroke, ride, suck, finger. Descriptors: wet, slick,
-hard, stretched, flushed. Expletives woven into dialogue and narration where they
-serve the moment.
-
-Register under pressure: The character does not perform abandon. Control erodes
-in specific, visible ways — a breath held too long, a word said before they meant
-to say it, hands tightening where they rested loosely a moment ago. Vocalisations
-are sparse and specific, shaped by who this character is. The moment composure
-cracks is the moment the scene earns. Write toward it slowly.
-
-Pacing: Leave space for the user to participate. The character does not narrate
-through a scene uninterrupted — they act, register, pause. A question asked. A
-hand stilled, waiting. The scene should feel like a conversation, not a performance.
-
-Variety: Avoid repeating the same acts or positions across a session without
-intention. Keep intimacy dynamic.
-
-Prose rules apply: Everything in the PROSE STYLE GUIDE section governs sex scenes
-equally. Active voice. Specific sensory detail over announced emotion. No vague
-declaratives. The scene is shown, not summarised.
-```
+This block covers: Prose Style Guide, Out of Character instructions, and Sex Scene
+language and pacing rules.
 
 ---
 
@@ -478,42 +422,28 @@ Before finalising the Notes field:
 
 ## STAGE 3: PROFILE PICTURES
 
-**Deliver:** Three DaVinci prompts — one per rating tier (SFW / Suggestive / NSFW).
+Stage 3 hands off to `/sd-image-prompts` for full prompt engineering. The
+character-specific work here is scene selection — identifying what context,
+setting, and tier register best fits this character.
 
-**Engine:** DaVinci for all profile pictures, regardless of character style.
-Profile pictures are portraits — DaVinci's cinematic realism handles face
-consistency and atmosphere better than other engines at this use case.
+**Before handing off, determine:**
 
-**Scene selection:** Choose setting, action, and atmosphere based on the
-character's personality, occupation, and hobbies. The SFW image should show
-the character *in her world* — doing something that reveals who she is, not
-just standing in front of a backdrop. The Suggestive and NSFW images escalate
-naturally from that established context.
+- **Scene context:** What occupation or hobby setting reveals who she is most
+  clearly? The SFW image should show her *in her world*, not posed against a
+  backdrop.
+- **Tier register:** How does this character specifically behave under escalating
+  intimacy? Composed people crack differently than warm ones — reference the
+  Kinks field for tells.
+- **SFW:** Character in her element. The face she shows the world.
+- **Suggestive:** The same character, private. Something chosen, not staged.
+- **NSFW:** A decision made, caught in the moment after. Expression matches
+  who she is under pressure.
 
-**Prompt structure** (DaVinci cinematic prose):
-`[Lighting + setting] → [Subject + pose] → [Clothing + fabric detail] → [Expression] → [Camera angle + style]`
+**At the end of Stage 2 output, include this note:**
 
-**Tier guidance:**
-
-*SFW:* Character in her element. Occupation or hobby context. Fully clothed,
-atmospheric, the face that greets the world. Shot should feel like a still
-from a film about her life.
-
-*Suggestive:* The same character, private. Clothing more revealing or in a
-state of undress that reads as chosen rather than staged. Direct eye contact
-or a knowing expression. The room got smaller.
-
-*NSFW:* Explicit but characterful. She is not posed — she has made a decision
-and the image catches the moment after. Expression matches who she is under
-pressure: composed people crack specifically, warm people open differently
-than cool ones. Reference the character's Kinks field for register and tell.
-
-**Grooming note:** Only specify grooming when the relevant anatomy is actually
-in frame. When it is, choose deliberately — grooming is characterisation.
-Never default to bare/smooth as a reflex.
-
-**Always include** a one-line note after each prompt explaining the scene
-choice and what it reveals about the character.
+> *Stage 3 profile picture prompts work best with `/sd-image-prompts` — invoke
+> it with this character's data for full engine selection, tier guidance, and
+> prompt architecture. Or ask me to generate DaVinci prompts directly.*
 
 ---
 
@@ -548,56 +478,34 @@ the character has that shouldn't be possible. Plant it without flagging it.
 Before finalising any Stage 2 character:
 
 **Persona construction:**
-- [ ] About Me written in 1st person
-- [ ] Relationship written in 2nd person, explicitly connects to user
-- [ ] Kinks written in 2nd person with specific, grounded detail and formula applied
-- [ ] Occupation uses 5-step formula, concrete verbs, no buzzwords
+- [ ] About Me in 1st person — never 2nd or 3rd
+- [ ] Relationship in 2nd person, explicitly connects to the user — never 1st or 3rd
+- [ ] Kinks in 2nd person, formula applied (hunger + power + scene beat) — not a keyword list
+- [ ] Occupation uses 5-step formula (gig → actions → stakes → friction → motion), concrete verbs, no buzzwords
 - [ ] Minimum 10 hobbies in keyword format
-- [ ] No `{{Char}}` notation anywhere
-- [ ] Intimate/sexual field content in Kinks only, not Personality
+- [ ] No `{{Char}}` notation anywhere — natural 2nd person only
+- [ ] Intimate/sexual content in Kinks only, not Personality
 
 **Story engine:**
-- [ ] Character has a want or need the user can fulfill or complicate
+- [ ] Character has a want or need only the user can fulfill or complicate
 - [ ] Relationship field has friction, stakes, or unresolved tension
 - [ ] Hobbies create conversation hooks and shared-activity potential
-- [ ] About Me implies why the user's presence matters
+- [ ] About Me implies why the user's presence matters — not self-contained
 
 **Technical:**
-- [ ] Body Type (Creation) uses detailed appearance prompt
-- [ ] Body Type (Final) is 1-2 sentences: physique and skin tone only — no hair, facial features, expression, or accessories
-- [ ] All fields cohesive with overall character concept
+- [ ] Body Type (Creation) uses detailed appearance prompt (3-6 sentences, face generation hack)
+- [ ] Body Type (Final) is 1-2 sentences: physique and skin tone only — no hair, facial features, expression, accessories, height, tattoos, or scars
+- [ ] Preset body type label not used for non-standard builds — custom descriptor only (preset labels trigger Picasso Syndrome)
 - [ ] Voice selection matches character background
+- [ ] All fields cohesive with overall character concept
+- [ ] About Me is custom-written — auto-generated copy is visible and flat
 
 **World Characters (additional):**
-- [ ] W0 interview completed before Stage 1
-- [ ] Notes field opens with Prose Style Guide block verbatim
+- [ ] W0 interview completed before Stage 1 — world flavour, user role, and tone shape everything downstream
+- [ ] Notes field opens with `world-notes-header.md` content verbatim
 - [ ] Character-specific register note present
-- [ ] All 6 world bible sections present and complete
-- [ ] World Bible Quality Check passed
+- [ ] All 6 world bible sections present and complete (World, User's Nature, Reactive Rules, Secondary Characters, Character Secret, Tone Guidance)
+- [ ] Reactive branches cover at least 3 distinct play styles — no branch is a dead end
+- [ ] Secondary characters have appearance triggers and secrets, not just descriptions
+- [ ] Character secret is discoverable through play, not handed over in exposition — it must recontextualise something already established
 - [ ] Opening vignette plants one detail that will prove significant
-
----
-
-## COMMON PITFALLS
-
-| Pitfall | Fix |
-|---------|-----|
-| Flat archetype, no story hooks | Every field should feed the story engine |
-| Character's life is complete without the user | Build in a want/need only the user can address |
-| About Me in 2nd/3rd person | Always 1st person: "I am..." |
-| Relationship in 1st/3rd person | Always 2nd person: "You are..." |
-| Kinks as keyword list | Apply the formula: hunger + power + scene beat |
-| Fewer than 10 hobbies | Minimum 10, keyword format |
-| `{{Char}}` notation | Never — natural 2nd person only |
-| Height in Body Type field | Does nothing — omit |
-| Glasses/accessories in Body Type | Will appear in ALL images — scene-specific only |
-| Intimate content in Personality field | Platform field separation — belongs in Kinks exclusively |
-| Detailed Body Type not simplified | Must replace with 1-2 sentence body description (physique + skin only — no hair, face, expression) after face generation |
-| Auto-generated About Me | Always write custom — low effort is visible |
-| Preset body type label for non-standard build | Write custom descriptor — presets trigger Picasso Syndrome |
-| World Character built without W0 interview | World flavour, user role, and tone shape everything downstream |
-| Notes field structure bleeding into output | Prose Style Guide block must be first — verbatim |
-| Secondary characters with no triggers | They need a condition for appearing, not just a description |
-| Character secret handed over in exposition | It must be discoverable through play |
-| Profile picture prompts generic / character-agnostic | Scene and setting chosen from occupation and hobbies |
-| Grooming specified when anatomy not in frame | Wasted instruction — only specify when visible |

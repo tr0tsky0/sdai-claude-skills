@@ -132,6 +132,7 @@ Flag it before generating. Don't silently produce a prompt likely to fail.
 | Anime (any content level) | **Monet only** |
 | Complex anatomy, multi-person | **DaVinci only** |
 | Facial consistency is the priority | **Vermeer** (single character only) |
+| Specific legible text in the image (signs, labels, tattoos) | **Vermeer** |
 | Realistic model cosplaying anime character | **DaVinci or Vermeer** — not Monet |
 
 ### ⚠️ Critical Engine Warnings
@@ -233,7 +234,7 @@ For complex scenes, use the **Structured Label Method** (see below).
 
 Highest quality, highest cost. Same prompt style as DaVinci.
 
-**Excels at:** single-character nude/solo NSFW, facial consistency, high-quality realistic rendering.
+**Excels at:** single-character nude/solo NSFW, facial consistency, high-quality realistic rendering, text rendering within images (signs, labels, tattoos with specific text — superior to other engines for legible in-image text).
 
 See engine warnings in Step 3 for hard limits.
 
@@ -266,16 +267,34 @@ Usage: Lead with artist name — `"Artgerm art style, young woman..."` or `"Ilya
 
 ---
 
-#### Picasso — Poetic Natural Language
+#### Picasso — Phrase-Based Evocative Language
 
-Flowing, romantic prose. Mood and intimacy over technical detail.
+Sits between Monet (keywords) and DaVinci (prose). Uses short evocative phrases
+and concepts — not comma-separated keywords, not flowing scene description.
+Each phrase is 2–6 words, descriptive but not syntactically complete.
+
+**Structure:** `[Setting phrase], [lighting phrase], [subject phrase], [clothing/state phrase], [pose phrase], [expression or mood phrase]`
 
 **Rules:**
 - ❌ No weighting syntax
-- ✅ 1–2 `(term)` tags maximum if absolutely needed
-- ✅ Evocative, atmospheric language
-- ✅ Clothed or partially clothed intimacy only
+- ❌ No flowing prose sentences — phrases, not paragraphs
 - ❌ Never for nudity, never for anime
+- ✅ Clothed or partially clothed intimacy only
+- ✅ 4–8 phrases total — concise over comprehensive
+- ✅ Romantic, intimate, atmospheric register
+- ✅ 1–2 `(term)` tags maximum if a specific element needs emphasis
+
+**Example (Picasso — Intimate):**
+> Warm lamplight, bedroom at dusk, woman in open silk robe, seated on bed edge,
+> one shoulder bare, contemplative expression, soft and unhurried
+
+**Example (Picasso — Suggestive):**
+> Late afternoon light, open window, sheer wrap half-shed, leaning against the
+> frame, gaze toward camera, (knowing expression:1.1), warm and deliberate
+
+**Contrast with DaVinci:** DaVinci builds a full cinematic scene in flowing
+sentences. Picasso gives the engine a set of weighted impressions and lets it
+compose — less directional control, more atmospheric freedom.
 
 ---
 
@@ -546,7 +565,7 @@ Not every good image makes a good seed. A video-ready seed has:
 
 **The real distinction is content tier, not aesthetic style.** Inferno is built specifically for uncensored explicit animation — it's the video equivalent of DaVinci's adult tier. Seraph handles everything else. Don't select Inferno for non-explicit content on the assumption it produces "better" or "higher energy" results — that distinction is unverified.
 
-**⚠️ Inferno 8-second bug (current):** The last ~3 seconds of an 8-second Inferno video reverse back toward the start position, effectively giving you 5 seconds of forward motion followed by a rewind. **Use 5-second duration on Inferno until this is patched.** Seraph does not exhibit this behaviour.
+**⚠️ Inferno 8-second bug (current as of skill creation — verify before use):** The last ~3 seconds of an 8-second Inferno video reverse back toward the start position, effectively giving you 5 seconds of forward motion followed by a rewind. **Use 5-second duration on Inferno until this is patched.** Seraph does not exhibit this behaviour. Remove this workaround note once SD.AI confirms the bug is resolved.
 
 **Duration guidance:**
 - **5 seconds** — test iterations on either engine, or all Inferno generations until bug is resolved
