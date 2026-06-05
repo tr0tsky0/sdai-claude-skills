@@ -242,6 +242,9 @@ accordingly.
 
 Load `references/platform-structure.md` when you need field options, presets, or character limits.
 
+**FORMATTING RULE — NO IN-SENTENCE LINE BREAKS**
+All generated field content is copy-pasted directly into SD.AI's text fields. Never break a line mid-sentence under any circumstances. A line break in the middle of a sentence creates a hard break in the destination field. Paragraph breaks only — and only between genuine paragraphs.
+
 ### CRITICAL FIELD MECHANICS
 
 #### Body Type — The Face Generation Hack
