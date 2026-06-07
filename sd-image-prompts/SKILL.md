@@ -6,18 +6,34 @@ description: >
   visual generation for an SD.AI character — including SFW/Suggestive/NSFW
   tier prompts, engine selection advice, NSFW prompts, camera angle or lighting
   requests, artist style references, or debugging of prompts that aren't producing
-  good results. Also trigger when the user asks which engine to use (DaVinci,
-  Monet, Picasso, Vermeer), or asks about structured label prompting, stability anchors,
-  the still-frame principle, cosplay prompting, or character costume references.
-  Also trigger for Live Photo or video generation requests — including dance prompts,
-  motion prompts, Seraph vs Inferno engine selection, seed image advice, or any
+  good results. Also trigger when the user asks which engine to use (Monet,
+  Picasso, Da Vinci, Vermeer, Rafael), or asks about structured label prompting,
+  stability anchors, the still-frame principle, cosplay prompting, or character
+  costume references. Also trigger for Live Photo or video generation requests —
+  including dance prompts, motion prompts, video seed image advice, or any
   request to animate a character. If image or video generation for an SD.AI
   character is involved in any way, use this skill.
 ---
 
 # SD.AI Image Prompt Generation
 
-Field-tested prompt engineering for Secret Desires AI's four engines.
+Field-tested prompt engineering for Secret Desires AI's five engines.
+
+---
+
+## PLATFORM REFERENCE
+
+**SD.ai Engine Mapping:**
+
+| Platform Name | Architecture | Token Limit |
+|---|---|---|
+| Monet | Keyword + weighting | 75 tokens |
+| Picasso | Natural language (short phrases) | Unlimited |
+| Da Vinci | Natural language (prose) | Unlimited |
+| Vermeer | Natural language + structured labels | 75 tokens |
+| Rafael | Natural language (LLM-powered) | 1000 tokens |
+
+**Note on Rafael:** Brand new engine (June 2026). Experimental; face inconsistency issues identified. Only recommend if user specifically requests. Use Da Vinci as fallback.
 
 ---
 
@@ -47,16 +63,19 @@ The prompt this skill generates is not the complete input the engine receives. S
 constructs the final engine prompt from multiple sources:
 
 - **Character profile fields** (hair colour, eye colour, skin tone, body type, breast
-  size, etc.) are appended to the user prompt automatically. This is why the skill
-  instructs you not to restate those traits — they're already in the engine's input.
+  size, butt size, image style) are appended to the user prompt automatically. This is
+  why the skill instructs you not to restate those traits — they're already in the
+  engine's input.
 - **A platform-level negative prompt** may also be injected before the prompt reaches
   the engine. Whether SD.AI does this, and what it suppresses, is not visible to users.
+  The exact behavior is undocumented.
 
 **Practical implication:** When the skill recommends positive anchors to compensate for
-missing negative suppression (e.g., `RAW photo` to counter anime drift in DaVinci), those
-anchors may be partially or fully redundant if the platform is already providing that
-suppression invisibly. Treat them as a safety net whose necessity is unconfirmed — they
-don't hurt, and they reinforce the target aesthetic regardless of what the platform provides.
+potentially missing negative suppression (e.g., `RAW photo` to counter anime drift in
+Da Vinci), those anchors may be partially or fully redundant if the platform is already
+providing that suppression invisibly. Treat them as a safety net whose necessity is
+unconfirmed — they don't hurt, and they reinforce the target aesthetic regardless of
+what the platform provides.
 
 The final prompt submitted to the engine is not visible. Build for what you can control.
 
@@ -86,6 +105,7 @@ Read the request carefully and identify:
 - **Cosplay** — is the character a named fictional character or original?
 - **Engine** — specified or unspecified?
 - **Clothing/scene intent** — what should be visible in the shot?
+- **Body type** — standard or non-standard? (critical for engine selection)
 
 If anything critical is missing or ambiguous, resolve it in **Step 2** before proceeding.
 
@@ -128,7 +148,7 @@ confirmation you don't need — unnecessary check-ins slow the user down.
 
 Assess the request and recommend one with a one-sentence rationale before generating.
 
-> *"Going with DaVinci — non-standard body type, Vermeer would ignore it."*
+> *"Going with Da Vinci — curvy body type, Monet/Vermeer/Rafael would normalize that."*
 > *"Monet — anime character at any content level."*
 > *"Vermeer — single character, realistic, facial consistency is worth the cost here."*
 
@@ -136,44 +156,73 @@ Assess the request and recommend one with a one-sentence rationale before genera
 
 Flag it before generating. Don't silently produce a prompt likely to fail.
 
-> *"Heads up — multi-character explicit scene. Vermeer will body-horror that. Switching to DaVinci unless you want to try anyway."*
-> *"Picasso note — your character is Curvy. Picasso Syndrome means that gets ignored, VS-model default. DaVinci will respect the body data."*
+> *"Heads up — multi-character explicit scene. Vermeer will body-horror that. Switching to Da Vinci unless you want to try anyway."*
+> *"Note — your character is Petite. Monet/Vermeer/Rafael underperform on non-standard body types. Da Vinci or Picasso will respect that better."*
+
+### Body Type Consideration (NEW)
+
+**VSM Syndrome:** Monet, Vermeer, and Rafael all tend to render default/normalized body types rather than respecting non-standard builds (Curvy, Thick, Petite). 
+
+**If character body type is non-standard (Curvy, Thick, Petite):**
+- ✅ **Best:** Da Vinci (respects body data most consistently)
+- ✅ **Good:** Picasso (respects body data reasonably well)
+- ⚠️ **Avoid:** Monet, Vermeer, Rafael (normalize to default proportions)
+
+---
 
 ### Engine Selection Table
 
-| Situation | Engine |
-|-----------|--------|
-| Realistic + SFW/suggestive, clothed only | Picasso or DaVinci |
-| Realistic + NSFW, single character, standard body type | Vermeer or DaVinci |
-| Realistic + NSFW, non-standard body type | **DaVinci only** |
-| Realistic + NSFW, multi-character or male characters | **DaVinci only** |
-| Realistic + any fantasy elements | **DaVinci only** |
-| Anime (any content level) | **Monet only** |
-| Complex anatomy, multi-person | **DaVinci only** |
-| Facial consistency is the priority | **Vermeer** (single character only) |
-| Specific legible text in the image (signs, labels, tattoos) | **Vermeer** |
-| Realistic model cosplaying anime character | **DaVinci or Vermeer** — not Monet |
+| Situation | Engine | Notes |
+|-----------|--------|-------|
+| Realistic + SFW/suggestive, clothed only | Picasso or Da Vinci | Picasso good for body type respect |
+| Realistic + NSFW, single character, standard body type | Vermeer or Da Vinci | Vermeer good for facial consistency |
+| Realistic + NSFW, non-standard body type | **Da Vinci** | Only engine that respects body type in NSFW |
+| Realistic + NSFW, multi-character or male characters | **Da Vinci only** | Vermeer produces body horror with multi-character |
+| Realistic + any fantasy elements | **Da Vinci only** | Vermeer forces Boris Vallejo style |
+| Anime (any content level) | **Monet only** | No alternatives for anime |
+| Complex anatomy, multi-person | **Da Vinci only** | Only reliable for complexity |
+| Facial consistency is the priority | **Vermeer** | (single character only) |
+| Legible text in the image (signs, labels, tattoos) | **Vermeer** | Proven text rendering capability |
+| User specifically requests Rafael (experimental) | **Rafael** | Flag face inconsistency risk; suggest Da Vinci as backup |
 
 ### ⚠️ Critical Engine Warnings
 
+**Monet:**
+- **Body type weakness:** VSM Syndrome — normalizes non-standard body types. For Curvy/Thick/Petite characters, recommend Da Vinci or Picasso instead.
+
 **Picasso:**
-- Never for anime characters (routes to Monet but charges Picasso pricing, mismatched prompt)
-- Never for nudity (anatomy issues)
-- Picasso Syndrome: ignores non-standard body types, defaults to VS-model physique. Curvy, thick, petite — all overridden. When in doubt: DaVinci.
+- **Body type:** Actually respects body data reasonably well; good for non-standard types
+- Works for clothed or partially clothed content
+- Not recommended for full nudity (anatomy quality issues in NSFW)
+- Never for anime characters
+
+**Da Vinci:**
+- No significant weaknesses
+- Handles all body types, all content levels, all complexity
+- Most reliable fallback
 
 **Vermeer:**
+- **Body type weakness:** VSM Syndrome — ignores non-standard body types. Curvy/Thick/Petite get normalized. Use Da Vinci instead.
 - Hard limit: never for multi-character NSFW → body horror, no exceptions
-- Hard limit: ignores non-standard body types (Picasso Syndrome applies here too)
 - Hard limit: any fantasy elements → forces Boris Vallejo style regardless of prompting, no workaround
 - Hard limit: anime characters → asset omissions and quality issues, use Monet
+- **Strength:** Facial consistency (single character); text rendering (signs, labels, tattoos)
 
 **Vermeer decision check** — confirm ALL before selecting:
 - [ ] Single character only
-- [ ] Standard body type (or body accuracy doesn't matter)
+- [ ] Standard body type (or non-standard body type accuracy doesn't matter because facial consistency is the priority)
 - [ ] No fantasy elements whatsoever
 - [ ] Premium cost is justified
 
-Any box unchecked → use DaVinci.
+Any box unchecked → use Da Vinci.
+
+**Rafael (Experimental):**
+- **Status:** Brand new (June 2026); not yet production-stable
+- **Issue:** Inconsistent facial rendering between generations; different-looking character versions
+- **Body type weakness:** VSM Syndrome — normalizes body types
+- **Recommendation:** Only use if user specifically requests. Otherwise recommend Da Vinci
+- **Future:** Monitor for stabilization; may become viable later
+- **Fallback:** Always suggest Da Vinci if Rafael output is problematic
 
 ---
 
@@ -232,59 +281,11 @@ Vague mood language ("flirty," "seductive," "alluring") produces results indisti
 
 ### Engine Architectures
 
-#### DaVinci — Cinematic Prose
-
-Write like describing a film still. Open every prompt with `RAW photo` — this is the single most effective anchor against anime/illustration style drift, which is this engine's primary failure mode without negative prompts.
-
-**Structure:** `RAW photo, [setting + lighting] → [subject + pose] → [clothing + fabric detail] → [expression] → [camera angle + style]`
-
-**Rules:**
-- ❌ No weighting syntax `(term:1.x)` — engine ignores it; use natural language emphasis instead
-- ✅ Open with `RAW photo` — anti-drift anchor, not just a quality signal
-- ✅ Reinforce photographic register: `photorealistic, natural skin texture, film photography`
-- ✅ Specify fabric properties: "sheer," "clinging," "translucent," "wet"
-- ✅ Use camera language: `85mm portrait lens`, `shallow depth of field`, `soft bokeh`, `film grain`
-- ✅ Film stock references activate specific aesthetic registers: `Fujifilm XT3`, `Kodak Portra 400`
-- ✅ Resolution signals: `8k uhd`, `hyperrealistic`
-
-**Anti-drift note:** Without a negative prompt, this engine can drift toward semi-realistic anime aesthetics on female subjects. `RAW photo` + `photorealistic, natural skin texture` is the compensating stack — include both, especially in ambiguous prompts.
-
-For complex scenes, use the **Structured Label Method** (see below).
-
----
-
-#### Vermeer — Detailed Natural Language (SDXL)
-
-Highest quality, highest cost. SDXL architecture — fundamentally different from the SD 1.5 engines. Rewards **detailed, explicit prompt construction** more than DaVinci does; sparse prompts still produce competent output but leave quality on the table.
-
-**⚠️ Token limit: 75 tokens maximum.** Plan prompt length accordingly — dense detail within a tight budget.
-
-**Official trigger words** (quality boost — include at least one):
-- `Skin Textures` — activates detailed skin rendering
-- `High Resolution` / `High-Resolution` / `High-Resolution Image` — clarity signal
-- `Cinematic` — film-like quality, dynamic narrative feel
-
-**Prompt component framework** (cover as many as the token budget allows):
-Subject → Action → Environment/Setting → Object → Color → Style → Mood/Atmosphere → Lighting → Perspective/Viewpoint → Texture/Material → **Clothing** (must be explicit — engine defaults to nudity without it)
-
-**Weighting syntax:** `(term:1.x)` has minimal or unpredictable effect on SDXL's dual text encoders. Use natural language emphasis, adjective stacking, and leading position in the prompt instead.
-
-**Positive anchors for quality reinforcement:**
-- `natural eyes, realistic eyes, detailed irises` — eye artifact suppression
-- `correct anatomy, natural proportions, well-formed hands` — anatomy
-- `photographic, natural skin, realistic lighting` — counters CGI/airbrushed drift
-
-**NSFW — male anatomy:** Male explicit content is harder to prompt reliably on this engine. Training data contained limited male nudity; compliance is lower than female anatomy and may require more repetition and explicit positioning language.
-
-**Excels at:** single-character nude/solo NSFW, facial consistency, high-quality realistic rendering, complex skin and fabric textures, text rendering within images (signs, labels, tattoos with specific text — superior to other engines for legible in-image text).
-
-See engine warnings in Step 3 for hard limits.
-
----
-
 #### Monet — Keyword Array + Weighting
 
-Comma-separated keywords with 6–8 weighted anchors. Trained on Danbooru image-tag pairs — its native language is tag arrays, not prose.
+Comma-separated keywords with 6–8 weighted anchors. Uses tag-based architecture — its native language is keyword arrays, not prose.
+
+**⚠️ Token limit: 75 tokens maximum.** Keep the tag list tight — prioritise the elements that matter most.
 
 **Structure:** `[quality anchors], [setting], [lighting], [(weighted clothing:1.x)], [(weighted pose:1.x)], [expression], [(weighted detail:1.x)], [style anchor]`
 
@@ -313,12 +314,15 @@ Comma-separated keywords with 6–8 weighted anchors. Trained on Danbooru image-
 
 Usage: Lead with artist name — `"Artgerm art style, young woman..."` or `"Ilya Kuvshinov art style..."`
 
+**Body type consideration:**
+- Monet normalizes non-standard body types (VSM Syndrome)
+- For Curvy/Thick/Petite characters, use Da Vinci or Picasso instead
+
 ---
 
 #### Picasso — Phrase-Based Evocative Language
 
-Sits between Monet (keywords) and DaVinci (prose). Uses short evocative phrases
-and concepts — not comma-separated keywords, not flowing scene description.
+Uses short evocative phrases and concepts — not comma-separated keywords, not flowing scene description.
 Each phrase is 2–6 words, descriptive but not syntactically complete.
 
 **The defining characteristic:** "The shorter the prompt, the better the result." This model interprets intent and fills compositional gaps creatively — long, exhaustive prompts fight against it.
@@ -327,18 +331,16 @@ Each phrase is 2–6 words, descriptive but not syntactically complete.
 - `mj` — activates Midjourney-adjacent aesthetic quality
 - `cozy` — warm, intimate atmosphere
 - `cinematic` — film-like quality, dramatic lighting
-- `masterpiece` — quality boost; performs at near-full strength here since SD.AI's single-prompt setup aligns with the creator's "empty negative field" recommendation for this token
+- `masterpiece` — quality boost; performs at near-full strength here
 
 **Structure:** `[trigger word(s)], [setting phrase], [lighting phrase], [subject phrase], [clothing/state phrase], [pose phrase], [expression or mood phrase]`
 
 **Rules:**
-- ❌ No weighting syntax
+- ❌ No weighting syntax — no brackets of any kind
 - ❌ No flowing prose sentences — phrases, not paragraphs
-- ❌ Never for nudity, never for anime
-- ✅ Clothed or partially clothed intimacy only
+- ✅ Clothed or partially clothed intimacy
 - ✅ 4–8 phrases total — concise over comprehensive
 - ✅ Romantic, intimate, atmospheric register
-- ✅ 1–2 `(term)` tags maximum if a specific element needs emphasis
 
 **Example (Picasso — Intimate):**
 > Warm lamplight, bedroom at dusk, woman in open silk robe, seated on bed edge,
@@ -346,11 +348,116 @@ Each phrase is 2–6 words, descriptive but not syntactically complete.
 
 **Example (Picasso — Suggestive):**
 > Late afternoon light, open window, sheer wrap half-shed, leaning against the
-> frame, gaze toward camera, (knowing expression:1.1), warm and deliberate
+> frame, gaze toward camera, knowing expression, warm and deliberate
 
-**Contrast with DaVinci:** DaVinci builds a full cinematic scene in flowing
+**Contrast with Da Vinci:** DaVinci builds a full cinematic scene in flowing
 sentences. Picasso gives the engine a set of weighted impressions and lets it
 compose — less directional control, more atmospheric freedom.
+
+**Body type consideration:**
+- Picasso respects body type data reasonably well
+- Good option for non-standard body types (Curvy, Thick, Petite)
+
+---
+
+#### Da Vinci — Cinematic Prose
+
+Write like describing a film still. Open every prompt with `RAW photo` — this is the single most effective anchor against anime/illustration style drift, which is this engine's primary failure mode without negative prompts.
+
+**Structure:** `RAW photo, [setting + lighting] → [subject + pose] → [clothing + fabric detail] → [expression] → [camera angle + style]`
+
+**Rules:**
+- ❌ No weighting syntax `(term:1.x)` — engine ignores it; use natural language emphasis instead
+- ✅ Open with `RAW photo` — anti-drift anchor, not just a quality signal
+- ✅ Reinforce photographic register: `photorealistic, natural skin texture, film photography`
+- ✅ Specify fabric properties: "sheer," "clinging," "translucent," "wet"
+- ✅ Use camera language: `85mm portrait lens`, `shallow depth of field`, `soft bokeh`, `film grain`
+- ✅ Film stock references activate specific aesthetic registers: `Fujifilm XT3`, `Kodak Portra 400`
+- ✅ Resolution signals: `8k uhd`, `hyperrealistic`
+
+**Anti-drift note:** This engine can drift toward semi-realistic aesthetic on female subjects. `RAW photo` + `photorealistic, natural skin texture` is the compensating stack — include both, especially in ambiguous prompts.
+
+For complex scenes, use the **Structured Label Method** (see below).
+
+**Body type consideration:**
+- Da Vinci respects all body types excellently
+- Best engine for non-standard body types (Curvy, Thick, Petite)
+- Recommended fallback for complex body type requirements
+
+---
+
+#### Vermeer — Detailed Natural Language
+
+Premium tier engine. Rewards **detailed, explicit prompt construction** more than Da Vinci does; sparse prompts still produce competent output but leave quality on the table.
+
+**⚠️ Token limit: 75 tokens maximum.** Plan prompt length accordingly — dense detail within a tight budget.
+
+**Official trigger words** (quality boost — include at least one):
+- `Skin Textures` — activates detailed skin rendering
+- `High Resolution` / `High-Resolution` / `High-Resolution Image` — clarity signal
+- `Cinematic` — film-like quality, dynamic narrative feel
+
+**Prompt component framework** (cover as many as the token budget allows):
+Subject → Action → Environment/Setting → Object → Color → Style → Mood/Atmosphere → Lighting → Perspective/Viewpoint → Texture/Material → **Clothing** (must be explicit — engine defaults to nudity without it)
+
+**Weighting syntax:** `(term:1.x)` has minimal or unpredictable effect on this engine's dual text encoders. Use natural language emphasis, adjective stacking, and leading position in the prompt instead.
+
+**Positive anchors for quality reinforcement:**
+- `natural eyes, realistic eyes, detailed irises` — eye artifact suppression
+- `correct anatomy, natural proportions, well-formed hands` — anatomy
+- `photographic, natural skin, realistic lighting` — counters CGI/airbrushed drift
+
+**NSFW — male anatomy:** Male explicit content is harder to prompt reliably on this engine. Training data contained limited male nudity; compliance is lower than female anatomy and may require more repetition and explicit positioning language.
+
+**Strengths:**
+- Single-character nude/solo NSFW
+- Facial consistency (single character only)
+- High-quality realistic rendering
+- Complex skin and fabric textures
+- **Text rendering within images** (signs, labels, tattoos with specific text — superior for legible in-image text)
+
+**Body type consideration:**
+- Vermeer normalizes non-standard body types (VSM Syndrome)
+- For Curvy/Thick/Petite characters, use Da Vinci instead
+- Only use Vermeer for facial consistency when body type accuracy doesn't matter
+
+See engine warnings in Step 3 for hard limits.
+
+---
+
+#### Rafael — LLM-Powered Text Rendering (EXPERIMENTAL)
+
+**Status:** Brand new engine (June 2026). Experimental; face inconsistency issues identified in testing.
+
+**Only recommend if user specifically requests. Otherwise suggest Da Vinci as fallback.**
+
+**Architecture:** Advanced language understanding with semantic relationship processing.
+
+**Prompt structure:**
+- **Optimal:** 1–3 sentences (sweet spot for token efficiency and quality)
+- **Maximum:** 1,000 tokens (supports long, detailed prompts)
+- **Formula:** `[Subject] + [Scene/Environment] + [Style/Medium] + [Lighting/Mood] + [Composition/Lens] + [Detail Modifiers]`
+
+**Parameter tuning:**
+- CFG Scale: 3–5 for production work (higher = stricter prompt adherence)
+- Steps: 25–40 for native quality (slower, higher fidelity); 4–8 for LoRA variants
+
+**Strengths:**
+- Complex text rendering in both English and Chinese
+- Photorealistic human faces without AI artifacts
+- Complex multi-element scenes
+- Natural material textures (wood grain, fabric weave, water, skin)
+- Product, packaging, and editorial content
+
+**Known Issues:**
+- **Face inconsistency:** Renders different-looking character versions across generations (different faces for same character)
+- **Body type weakness:** VSM Syndrome — normalizes non-standard body types
+- Not production-stable for character continuity work
+
+**Recommendation:**
+- If user specifically requests Rafael, flag the face inconsistency risk
+- Suggest Da Vinci as more reliable alternative
+- Monitor for stabilization; may become viable after refinement
 
 ---
 
@@ -364,7 +471,7 @@ breast size, butt size, image style — all load automatically from character pr
 ❌ Repeating: `"curvy woman with brown hair"` — redundant and vague
 
 **Positive phrasing only:**
-Engines cannot parse negation.
+Users have no access to negative prompts. All guidance must use positive description.
 - ❌ `"no bra"` → ✅ `"braless under loose shirt"`
 - ❌ `"without makeup"` → ✅ `"clean-faced, natural skin"`
 - ❌ `"no clutter"` → ✅ `"minimalist background"`
@@ -399,55 +506,34 @@ State the core action 3–4 times using different phrasings:
 3. Anatomical positioning (where things are)
 4. Depth/intensity qualifier
 
-Field testing: without reinforcement = 0/4 compliance. With reinforcement = ~2/4.
-Generate 4–8 images and select best.
+**Example:**
+> She straddles him. Her body rocks in a slow, deliberate rhythm. She's positioned with him fully inside her, hips pressing down with each motion. The pace is deep and controlled.
 
 ---
 
-### Structured Label Method (DaVinci — Complex Scenes)
+### Structured Label Method (Complex Scenes)
 
-Use when: multi-person compositions, complex poses, precise NSFW tier anatomy,
-or prose has produced inconsistent results.
+For multi-element compositions where precision matters (cosplay with many layers, complex NSFW anatomy, detailed environments):
+
+Break the prompt into labeled components:
 
 ```
-Composition:
-[Camera angle, POV, framing, spatial relationships]
-
-Setting:
-[Location, furniture, props]
-
-Lighting:
-[Type, direction, quality, colour temperature]
-
-Characters:
-[Only if multiple people OR critical traits need emphasis]
-Name: [age], [distinguishing features]
-
-Clothing:
-[Every visible garment + current state — "bra pulled down below breasts"]
-[For cosplay: name every layer — overdress, underdress, apron, gloves, accessories, wig]
-
-Actions:
-[Frozen-moment poses, stacked without contradiction]
-[For NSFW: repeat core action 3–4x in different phrasings]
-
-Physical State:
-[Visual consequences — wetness, marks, flushing, evidence of action]
-
-Expressions:
-[Facial/emotional state — skip if fully implied by actions]
+[SETTING] Luxurious bedroom, afternoon light through sheer curtains, soft golden shadows
+[CHARACTER] A woman, confident expression, head tilted slightly toward camera
+[CLOTHING] Black lace bra, denim shorts unbuttoned and unzipped but still on hips
+[POSE] Seated on edge of bed, one knee raised, one hand resting on thigh
+[LIGHTING] Warm, diffused light creating subtle shadows across skin and fabric
+[CAMERA] 50mm lens, shallow depth of field, warm color grade
+[STYLE] Photorealistic, film photography aesthetic, intimate and composed
 ```
 
-**Prose vs structured:**
-- **Prose:** Single subject, simple composition, atmospheric/mood focus
-- **Structured:** Multi-person, complex anatomy, NSFW tier precision, debugging failed prose prompts
+This method works best on Da Vinci and Vermeer (both handle structured input well). Less effective on Monet (prefers keywords) and Picasso (prefers brevity).
 
 ---
 
 ### Cosplay Prompting
 
-**The principle:** Combine character name with explicit key costume elements.
-The name leverages engine training data; the description anchors it and prevents approximation.
+**The principle:** Combine character name with explicit key costume elements. The name leverages engine training data; the description anchors it and prevents approximation.
 
 **Never rely on the name alone. Never omit visible costume elements.**
 
@@ -458,8 +544,7 @@ The name leverages engine training data; the description anchors it and prevents
 - ❌ `"Generate 2B"` (character generation, not cosplay)
 
 **Realistic model cosplaying anime character:**
-Use DaVinci or Vermeer — not Monet. The model is realistic; the character is anime.
-Anime style anchors (Ilya Kuvshinov, Artgerm, etc.) will fight the realistic render.
+Use Da Vinci or Vermeer — not Monet. The model is realistic; the character is anime. Anime style anchors (Ilya Kuvshinov, Artgerm, etc.) will fight the realistic render.
 
 **Key costume elements to anchor:**
 Focus on what defines the character visually:
@@ -468,20 +553,19 @@ Focus on what defines the character visually:
 - Hair/wig if defining (2B's white bob, Harley's pigtails)
 - Distinctive colour combinations
 
-Generic details the engine fills correctly from the name don't need explicit description
-unless they're critical to the scene.
+Generic details the engine fills correctly from the name don't need explicit description unless they're critical to the scene.
 
 **Character versions — be specific:**
 - ✅ `"Cosplaying as Harley Quinn in her Suicide Squad costume"`
 - ❌ `"Cosplaying as Harley Quinn"` — which version?
 
-**DaVinci cosplay template:**
+**Da Vinci cosplay template:**
 ```
 [Lighting + setting], dressed as [Character] in [key costume elements],
 [pose], [expression], [camera angle + cinematic style]
 ```
 
-**Example (DaVinci — 2B):**
+**Example (Da Vinci — 2B):**
 > Cool studio lighting with a dramatic backlit halo effect. Dressed as 2B from
 > NieR: Automata — black gothic dress with embroidered hem, white short bob,
 > black visor blindfold, black gloves, thigh-high stockings and over-the-knee boots —
@@ -489,9 +573,7 @@ unless they're critical to the scene.
 > tilted slightly down. Expression composed, unreadable. Shot on 85mm, shallow depth
 > of field, cinematic realism.
 
-⚠️ **Vermeer + fantasy/sci-fi franchises:** Even with correct costume anchoring,
-Vermeer may default to Boris Vallejo mode for fantasy-adjacent characters.
-Use DaVinci for cosplay from fantasy or sci-fi franchises.
+⚠️ **Vermeer + fantasy/sci-fi franchises:** Even with correct costume anchoring, Vermeer may default to Boris Vallejo mode for fantasy-adjacent characters. Use Da Vinci for cosplay from fantasy or sci-fi franchises.
 
 ---
 
@@ -519,66 +601,89 @@ Lead every prompt with lighting — it sets the entire mood.
 | Overcast | Soft, even, natural | `"diffused daylight," "soft even lighting"` |
 | Studio | Clean, professional | `"softbox illumination," "professional photography lighting"` |
 
-### Quick Prompt Templates
-
-**DaVinci Portrait:**
-`RAW photo, [lighting + setting], [subject in specific pose], [clothing with fabric detail], [expression], [camera angle + cinematic style]`
-
-**Monet Anime:**
-`masterpiece, best quality, detailed face, [setting], [lighting], [(weighted clothing:1.x)], [(weighted pose:1.x)], [expression], [(style anchor:1.x)]`
-
-**Picasso Romantic:**
-`[trigger word(s)], [poetic scene-setting], [subject action], [clothing context], [emotional tone], [atmospheric conclusion]`
-
-**DaVinci Macro:**
-`RAW photo, macrophotography, extreme close-up of [feature], [what's in/on the feature], [micro-details], shallow depth of field`
-
-**DaVinci Worm's-Eye:**
-`RAW photo, worm's-eye view, [subject turning back toward camera], [pose emphasising lower body], [clothing], [expression], [background becomes ceiling/sky]`
-
 ---
 
 ## STEP 5: VERIFY
 
-Before outputting any prompt, run this checklist mentally. Fix anything that fails.
+Before outputting, self-check:
 
-### All Prompts
-- [ ] Every garment visible in the shot is explicitly named
-- [ ] Clothing in a displaced state is described in that state, not omitted
-- [ ] Nothing is described that shouldn't appear in frame
-- [ ] No negation used ("no bra" etc.) — all phrasing is positive
-- [ ] No motion verbs — still-frame principle observed
-- [ ] Auto-appended traits not redundantly repeated
-- [ ] Engine-appropriate syntax used (no weights in DaVinci, etc.)
-- [ ] Prompt leads with lighting or setting
-
-### Cosplay Prompts (additional)
-- [ ] Character name + key costume elements both present
-- [ ] Every visible costume layer named (overdress, underdress, apron, gloves, accessories, wig)
-- [ ] Framing positions model in costume, not character rendering
-- [ ] Correct engine for model type (realistic model → DaVinci/Vermeer, not Monet)
-- [ ] Character version specified if character has multiple distinct looks
-
-### NSFW Tier (additional)
-- [ ] Direct anatomical terminology used — no euphemisms
-- [ ] All four stability anchor categories present
-- [ ] Grooming specified
-- [ ] Complex anatomy repeated 3–4x in different phrasings (if applicable)
+- [ ] **Character traits:** Am I repeating auto-appended traits unnecessarily? (Only if styling)
+- [ ] **Positive only:** Every element described with positive language, no negation?
+- [ ] **In-frame:** Only describing what's visible in the shot?
+- [ ] **Still-frame:** No ongoing motion verbs (unless video prompt)?
+- [ ] **Engine match:** Is the prompt architecture correct for the selected engine?
+- [ ] **Body type:** If non-standard body type, is the engine appropriate? (Da Vinci preferred)
+- [ ] **Three tiers:** SFW → Suggestive → NSFW, each clearly labeled?
+- [ ] **Copy-paste ready:** Can user paste directly without editing?
 
 ---
 
 ## STEP 6: OUTPUT
 
-Deliver all three tiers, clearly labelled, copy-paste ready.
+Deliver three tiers, clearly labeled, copy-paste ready.
 
-If you flagged any engine conflicts or made assumptions about costume details,
-note them briefly after the prompts so the user can course-correct.
+Format:
+```
+**SFW:**
+[prompt]
+
+**Suggestive:**
+[prompt]
+
+**NSFW:**
+[prompt]
+```
 
 ---
 
-## LIVE PHOTO (VIDEO GENERATION)
+## TROUBLESHOOTING MATRIX
 
-SD.AI's Live Photo feature animates a still image into a short video clip using a text prompt and a seed image. This is a fundamentally different workflow from image generation and carries unique costs and constraints.
+| Problem | Cause | Fix |
+|---------|-------|-----|
+| Character looks nothing like profile | Wrong engine for body type | Use Da Vinci for non-standard bodies; avoid Monet/Vermeer/Rafael |
+| Curvy character renders slim/default | VSM Syndrome (Monet/Vermeer/Rafael) | Switch to Da Vinci or Picasso |
+| Petite character renders full-figured | Rare; usually indicates baseline render | Confirm with user; consider reprompting with Da Vinci |
+| Face looks different each generation | Rafael face inconsistency | Use Da Vinci instead; Rafael not stable for character work |
+| Anime drift (Da Vinci) | Missing `RAW photo` anchor | Add `RAW photo` at prompt start + `photorealistic, natural skin texture` |
+| Text looks like gibberish | Wrong engine or over-specification | Use Vermeer for text; keep text description concise and clear |
+| Suggestive reads as SFW | Insufficient descriptor density | Add 3+ concrete physical descriptors (neckline, pose, expression, etc.) |
+| NSFW looks airbrushed/CGI | Missing photorealism anchors | Add `natural skin, realistic texture, film photography` |
+| Clothing disappears or morphs | Not explicitly named in-frame | Name every garment explicitly; describe its state (on, off, aside, etc.) |
+| Hands look broken | No hand placement guidance | Give hands a surface or object to interact with |
+| Background destabilizes in video | Too much environmental detail | Focus prompt on character; note "stable environment throughout" |
+| Only one body part animating | Insufficient motion specification | Call out every joint; specify sequencing (hips first, then shoulders, etc.) |
+
+---
+
+## PITFALL MATRIX
+
+| Pitfall | Fix |
+|---------|-----|
+| Starting with "a woman..." | Lead with setting/lighting instead |
+| Using negation | Rephrase positively: "no bra" → "braless under loose shirt" |
+| Motion verbs in still image | Frozen moment: "arching" → "arched back" |
+| Vague body descriptors | Style the auto-trait: "arched back emphasising her curves" |
+| Omitting visible garments | If it's in frame, name it — omission = nudity |
+| Describing out-of-frame items | Don't describe what isn't visible |
+| Vague Suggestive tier language | "Flirty" doesn't move the needle — use concrete physical descriptors |
+| Suggestive tier with already-revealing costume | Clothing levers maxed — differentiate via pose, expression, camera angle |
+| Monet for realistic character with non-standard body type | VSM Syndrome — use Da Vinci or Picasso |
+| Stacked brackets in Monet | `((term))` → `(term:1.x)` |
+| Picasso for anime characters | Switch to Monet |
+| Picasso for full nudity | Anatomy issues — use Da Vinci instead |
+| Non-standard body type on Monet/Vermeer/Rafael | VSM Syndrome — use Da Vinci or Picasso |
+| Multi-character NSFW on Vermeer | Body horror every time — use Da Vinci |
+| Fantasy elements on Vermeer | Forces Boris Vallejo style — use Da Vinci |
+| Single statement for complex anatomy (NSFW) | Repeat 3–4x in different phrasings |
+| Cosplay name without costume description | Always anchor key elements explicitly |
+| Anime style anchor on realistic model | Removes clarity — use only for anime characters |
+| Using Rafael for character consistency work | Face inconsistency issue — use Da Vinci instead |
+
+---
+
+## LIVE PHOTO (VIDEO) PROMPTING
+
+Video prompts invert the still-frame principle: motion verbs are now required. Describe change over time, not a frozen moment.
 
 ---
 
@@ -591,9 +696,7 @@ SD.AI's Live Photo feature animates a still image into a short video clip using 
 - Is the motion request achievable within 5–10 seconds?
 - Is the prompt specific enough that failure is unlikely?
 
-If the answer to any of these is uncertain — generate a purpose-built seed first, or iterate on the prompt with a cheaper/expendable seed before using a precious one.
-
----
+If uncertain — generate a purpose-built seed first, or iterate on the prompt with a cheaper/expendable seed before using a precious one.
 
 ### Video-Ready Seed Criteria
 
@@ -601,10 +704,10 @@ Not every good image makes a good seed. A video-ready seed has:
 
 - **Implied momentum** — weight mid-transfer, a raised limb, a turn already in progress. The engine continues motion; it doesn't initiate it well from a fully settled pose.
 - **Clear subject separation** — subject distinct from background. Complex or busy backgrounds animate unpredictably.
-- **Simple reflective surfaces** — holographic, metallic, or highly reflective clothing is high-risk. It can animate beautifully or geometry-collapse. Factor this in.
-- **No extreme detail dependency** — fine details (razor lines, specific tattoos, small accessories) may or may not survive animation. Don't burn a seed whose value depends entirely on a detail surviving.
+- **Simple reflective surfaces** — holographic, metallic, or highly reflective clothing is high-risk. Factor this in.
+- **No extreme detail dependency** — fine details (specific tattoos, small accessories) may not survive animation. Don't burn a seed whose value depends on a detail surviving.
 
-**Purpose-built seeds for video:** If the existing character images aren't video-ready, generate a seed specifically for animation using motion-implying pose language:
+**Purpose-built seeds for video:** If existing character images aren't video-ready, generate a seed specifically for animation:
 > *"Caught mid-stride, weight forward, one foot lifted"*
 > *"Mid-rotation, body angled away, face turning back over shoulder"*
 > *"Both arms raised loosely, hips canted, already in motion"*
@@ -619,9 +722,9 @@ Not every good image makes a good seed. A video-ready seed has:
 | Explicit/adult animation | **Inferno** |
 | Default / uncertain | **Seraph** |
 
-**The real distinction is content tier, not aesthetic style.** Inferno is built specifically for uncensored explicit animation — it's the video equivalent of DaVinci's adult tier. Seraph handles everything else. Don't select Inferno for non-explicit content on the assumption it produces "better" or "higher energy" results — that distinction is unverified.
+**The distinction is content tier, not aesthetic style.** Inferno is built specifically for uncensored explicit animation. Seraph handles everything else. Don't select Inferno for non-explicit content on the assumption it produces better results — that distinction is unverified.
 
-**⚠️ Inferno 8-second bug (current as of skill creation — verify before use):** The last ~3 seconds of an 8-second Inferno video reverse back toward the start position, effectively giving you 5 seconds of forward motion followed by a rewind. **Use 5-second duration on Inferno until this is patched.** Seraph does not exhibit this behaviour. Remove this workaround note once SD.AI confirms the bug is resolved.
+**⚠️ Inferno 8-second bug (verify whether still active):** The last ~3 seconds of an 8-second Inferno video reverse back toward the start position, giving ~5 seconds of forward motion followed by a rewind. **Use 5-second duration on Inferno until confirmed patched.** Seraph does not exhibit this behaviour.
 
 **Duration guidance:**
 - **5 seconds** — test iterations on either engine, or all Inferno generations until bug is resolved
@@ -641,7 +744,7 @@ Not every good image makes a good seed. A video-ready seed has:
 | Shoulders | *"shoulders counter-rotating against the hips"* — **this is load-bearing** |
 | Head | *"head nodding subtly, turning slowly toward camera"* |
 | Arms | *"one arm rising loosely to shoulder height, drifting back down"* |
-| Hands | *"fingers trailing across the jacket lapel as the arm passes"* — give hands a surface to relate to, not free air |
+| Hands | *"fingers trailing across the jacket lapel as the arm passes"* — give hands a surface, not free air |
 | Hair | *"hair swaying a half-beat behind the body"* |
 | Clothing | *"jacket shifting and rippling with every movement"* |
 
@@ -656,38 +759,46 @@ Not every good image makes a good seed. A video-ready seed has:
 
 ---
 
-### Prompt Architecture — Live Photo
+### Structure
 
-Video prompts describe **change over time**, not a frozen moment. The still-frame principle from image prompting is *inverted* here — motion verbs are now required.
-
-**Structure:**
 1. **Initiation** — what happens first, continuing from the seed pose
 2. **Core motion** — the sustained action, joint by joint
 3. **Secondary motion** — environmental/clothing/hair responding to primary motion
 4. **Resolution** — where the clip lands at the end (helps avoid abrupt cuts)
 5. **Continuity note** — *"fluid and continuous throughout, no static frames"*
 
-**Template:**
+### Template
+
 > [She initiates from seed pose]. [Primary motion — hips, then shoulders counter-rotating, then head]. [Secondary motion — hair, clothing, environment]. [She lands/ends on X]. Fluid and continuous throughout.
 
-**Example (dance):**
+### Example (Dance)
+
 > She steps down from the speaker into the dance, boot landing with the beat. Hips roll side to side in a slow rhythm, shoulders counter-rotating against them — right shoulder drops as left hip rises. Head turns slowly toward camera, chin leading. One arm rises from the side, elbow loose, fingers trailing across the jacket lapel as it passes. Jacket ripples with every movement. Hair sways a half-beat behind her body. She finds the camera and holds it. Fluid and continuous throughout, no isolated movement.
 
----
+### Camera Movement Vocabulary
+
+| Movement | Effect | Use Case |
+|----------|--------|----------|
+| **Slow push-in** | Intimacy, focus, tension | Character moments |
+| **Gentle pan** | Reveal, context | Establishing shots |
+| **Tracking shot** | Following action | Character movement |
+| **Crane up** | Revelation, scale | Establishing/closing |
+| **Handheld** | Realism, energy | Action sequences |
+| **Locked** | Stability, isolation | Character focus |
+
+**Key principle:** One primary camera movement per prompt. Multiple simultaneous movements create jittery, incoherent footage.
 
 ### Troubleshooting Failed Videos
 
 | Problem | Fix |
 |---------|-----|
-| Only hips/one body part moving | Add explicit instruction for every joint; end prompt with *"full body engaged, not just lower half"* |
+| Only hips/one body part moving | Add explicit instruction for every joint; end with *"full body engaged, not just lower half"* |
 | Motion freezes after 2 seconds | Add *"continuous motion throughout entire duration"* |
 | Background destabilises | Add *"character motion only, stable environment throughout"* |
-| Clothing disappears or phases | Name the garment explicitly mid-prompt: *"holographic jacket remains on and visible throughout"* |
+| Clothing disappears or phases | Name the garment explicitly mid-prompt: *"jacket remains on and visible throughout"* |
 | Hands look broken | Give hands a surface: *"fingers resting lightly on her own hip"* |
 | Motion is jerky/robotic | Specify rhythm source: *"moving to a slow driving beat," "fluid like water"* |
 | Engine chose wrong motion entirely | Be more prescriptive — name the specific body part and direction: *"left hip rises, right shoulder drops"* |
-
----
 
 ### Unexpected Engine Decisions
 
@@ -701,25 +812,34 @@ If an unexpected detail is *good* — note it for future seeds. If it's destruct
 
 ---
 
-| Pitfall | Fix |
-|---------|-----|
-| Starting with "a woman..." | Lead with setting/lighting instead |
-| Using negation | Rephrase positively: "no bra" → "braless under loose shirt" |
-| Motion verbs | Frozen moment: "arching" → "arched back" |
-| Vague body descriptors | Style the auto-trait: "arched back emphasising her curves" |
-| Omitting visible garments | If it's in frame, name it — omission = nudity |
-| Describing out-of-frame items | Don't describe what isn't visible |
-| Vague Suggestive tier language | "Flirty" doesn't move the needle — use concrete physical descriptors |
-| Suggestive tier, already-revealing costume | Clothing levers maxed — differentiate via pose, expression, camera angle |
-| Monet for realistic model cosplay | Use DaVinci/Vermeer — model is realistic |
-| Stacked brackets in Monet | `((term))` → `(term:1.x)` |
-| Picasso for anime/nudity | Switch to Monet or DaVinci respectively |
-| Picasso for non-standard body types | Picasso Syndrome — use DaVinci |
-| Vermeer for multi-character NSFW | Body horror every time — use DaVinci |
-| Vermeer for non-standard body types | Body data ignored — use DaVinci |
-| Vermeer for fantasy elements | Forces Boris Vallejo style — use DaVinci |
-| Single statement for complex anatomy (adult tier) | Repeat 3–4x in different phrasings |
-| Cosplay name without costume description | Always anchor key elements explicitly |
-| Anime style anchor on realistic model | Remove — fights the render |
+## APPENDIX: KNOWN UNKNOWNS & MONITORING
+
+**These items require clarification or monitoring. Will be updated as new information becomes available:**
+
+### Platform-Level Negative Prompt Behavior
+- **Status:** Undocumented
+- **Unknown:** Does it exist? What does it suppress? How does it interact with implicit tier detection?
+- **Implication:** Safety anchors (e.g., `RAW photo` to prevent anime drift) may be redundant if platform is already suppressing it invisibly
+- **Recommendation:** Continue using them as safety net until behavior is confirmed
+
+### Anime vs. Realistic Framework Differences
+- **Status:** Assumed to exist; not empirically tested
+- **Unknown:** How specifically does system-level framing differ between the two styles?
+- **Implication:** Identical prompts may behave differently on Anime vs. Realistic due to framework-level adjustments
+- **Recommendation:** Monitor for differences when testing across styles
+
+### Rafael Stabilization Timeline
+- **Status:** Experimental (June 2026)
+- **Issue:** Inconsistent facial rendering between generations
+- **Unknown:** When/if it stabilizes; whether face consistency issues resolve
+- **Recommendation:** Monitor for improvements; re-test periodically; flag as "not production-ready" until stabilized
+
+### DaVinci vs. Monet for Anime
+- **Status:** Skill recommends Monet only; not empirically tested in current round
+- **Unknown:** Can DaVinci produce comparable anime quality? When should users choose one over the other?
+- **Recommendation:** Test if user requests it; document comparative strengths
 
 ---
+
+**Last Updated:** June 2026 (Post-Empirical Testing)  
+**Confidence Levels:** High for engine selection; Medium for detailed parameter guidance; Low for undocumented platform behaviors
