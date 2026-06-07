@@ -215,26 +215,49 @@ Vague mood language ("flirty," "seductive," "alluring") produces results indisti
 
 #### DaVinci — Cinematic Prose
 
-Write like describing a film still.
+Write like describing a film still. Open every prompt with `RAW photo` — this is the single most effective anchor against anime/illustration style drift, which is this engine's primary failure mode without negative prompts.
 
-**Structure:** `[Setting + lighting] → [Subject + pose] → [Clothing + fabric detail] → [Expression] → [Camera angle + style]`
+**Structure:** `RAW photo, [setting + lighting] → [subject + pose] → [clothing + fabric detail] → [expression] → [camera angle + style]`
 
 **Rules:**
-- ❌ No weighting syntax `(term:1.x)` — engine ignores it
-- ✅ Emphasise through prose detail and repetition
-- ✅ Lead with lighting or setting
+- ❌ No weighting syntax `(term:1.x)` — engine ignores it; use natural language emphasis instead
+- ✅ Open with `RAW photo` — anti-drift anchor, not just a quality signal
+- ✅ Reinforce photographic register: `photorealistic, natural skin texture, film photography`
 - ✅ Specify fabric properties: "sheer," "clinging," "translucent," "wet"
-- ✅ Use camera language: "shallow depth of field," "85mm portrait lens," "soft bokeh"
+- ✅ Use camera language: `85mm portrait lens`, `shallow depth of field`, `soft bokeh`, `film grain`
+- ✅ Film stock references activate specific aesthetic registers: `Fujifilm XT3`, `Kodak Portra 400`
+- ✅ Resolution signals: `8k uhd`, `hyperrealistic`
+
+**Anti-drift note:** Without a negative prompt, this engine can drift toward semi-realistic anime aesthetics on female subjects. `RAW photo` + `photorealistic, natural skin texture` is the compensating stack — include both, especially in ambiguous prompts.
 
 For complex scenes, use the **Structured Label Method** (see below).
 
 ---
 
-#### Vermeer — Cinematic Prose (DaVinci-style)
+#### Vermeer — Detailed Natural Language (SDXL)
 
-Highest quality, highest cost. Same prompt style as DaVinci.
+Highest quality, highest cost. SDXL architecture — fundamentally different from the SD 1.5 engines. Rewards **detailed, explicit prompt construction** more than DaVinci does; sparse prompts still produce competent output but leave quality on the table.
 
-**Excels at:** single-character nude/solo NSFW, facial consistency, high-quality realistic rendering, text rendering within images (signs, labels, tattoos with specific text — superior to other engines for legible in-image text).
+**⚠️ Token limit: 75 tokens maximum.** Plan prompt length accordingly — dense detail within a tight budget.
+
+**Official trigger words** (quality boost — include at least one):
+- `Skin Textures` — activates detailed skin rendering
+- `High Resolution` / `High-Resolution` / `High-Resolution Image` — clarity signal
+- `Cinematic` — film-like quality, dynamic narrative feel
+
+**Prompt component framework** (cover as many as the token budget allows):
+Subject → Action → Environment/Setting → Object → Color → Style → Mood/Atmosphere → Lighting → Perspective/Viewpoint → Texture/Material → **Clothing** (must be explicit — engine defaults to nudity without it)
+
+**Weighting syntax:** `(term:1.x)` has minimal or unpredictable effect on SDXL's dual text encoders. Use natural language emphasis, adjective stacking, and leading position in the prompt instead.
+
+**Positive anchors for quality reinforcement:**
+- `natural eyes, realistic eyes, detailed irises` — eye artifact suppression
+- `correct anatomy, natural proportions, well-formed hands` — anatomy
+- `photographic, natural skin, realistic lighting` — counters CGI/airbrushed drift
+
+**NSFW — male anatomy:** Male explicit content is harder to prompt reliably on this engine. Training data contained limited male nudity; compliance is lower than female anatomy and may require more repetition and explicit positioning language.
+
+**Excels at:** single-character nude/solo NSFW, facial consistency, high-quality realistic rendering, complex skin and fabric textures, text rendering within images (signs, labels, tattoos with specific text — superior to other engines for legible in-image text).
 
 See engine warnings in Step 3 for hard limits.
 
@@ -242,9 +265,15 @@ See engine warnings in Step 3 for hard limits.
 
 #### Monet — Keyword Array + Weighting
 
-Comma-separated keywords with 6–8 weighted anchors.
+Comma-separated keywords with 6–8 weighted anchors. Trained on Danbooru image-tag pairs — its native language is tag arrays, not prose.
 
-**Structure:** `[setting], [lighting], [(weighted clothing:1.x)], [(weighted pose:1.x)], [expression], [(weighted detail:1.x)], [style anchor]`
+**Structure:** `[quality anchors], [setting], [lighting], [(weighted clothing:1.x)], [(weighted pose:1.x)], [expression], [(weighted detail:1.x)], [style anchor]`
+
+**Quality anchors** (place at prompt start — 2–3 maximum, don't stack excessively):
+- `masterpiece, best quality` — strong positive baseline
+- `highly detailed` / `ultra-detailed` — detail density
+- `detailed face, beautiful eyes` — counters eye quality issues this lineage is known for
+- `perfect anatomy, correct proportions` — reduces limb and hand artifacts
 
 **Weighting guide:**
 - `(term)` — mild emphasis
@@ -273,7 +302,15 @@ Sits between Monet (keywords) and DaVinci (prose). Uses short evocative phrases
 and concepts — not comma-separated keywords, not flowing scene description.
 Each phrase is 2–6 words, descriptive but not syntactically complete.
 
-**Structure:** `[Setting phrase], [lighting phrase], [subject phrase], [clothing/state phrase], [pose phrase], [expression or mood phrase]`
+**The defining characteristic:** "The shorter the prompt, the better the result." This model interprets intent and fills compositional gaps creatively — long, exhaustive prompts fight against it.
+
+**Trigger words** (documented quality/mood effects — use one or two to set register):
+- `mj` — activates Midjourney-adjacent aesthetic quality
+- `cozy` — warm, intimate atmosphere
+- `cinematic` — film-like quality, dramatic lighting
+- `masterpiece` — quality boost; performs at near-full strength here since SD.AI's single-prompt setup aligns with the creator's "empty negative field" recommendation for this token
+
+**Structure:** `[trigger word(s)], [setting phrase], [lighting phrase], [subject phrase], [clothing/state phrase], [pose phrase], [expression or mood phrase]`
 
 **Rules:**
 - ❌ No weighting syntax
@@ -466,19 +503,19 @@ Lead every prompt with lighting — it sets the entire mood.
 ### Quick Prompt Templates
 
 **DaVinci Portrait:**
-`[Lighting + setting], [subject in specific pose], [clothing with fabric detail], [expression], [camera angle + cinematic style]`
+`RAW photo, [lighting + setting], [subject in specific pose], [clothing with fabric detail], [expression], [camera angle + cinematic style]`
 
 **Monet Anime:**
-`[setting], [lighting], [(weighted clothing:1.x)], [(weighted pose:1.x)], [expression], [(style anchor:1.x)]`
+`masterpiece, best quality, detailed face, [setting], [lighting], [(weighted clothing:1.x)], [(weighted pose:1.x)], [expression], [(style anchor:1.x)]`
 
 **Picasso Romantic:**
-`[Poetic scene-setting] as [subject action], [clothing context], [emotional tone], [atmospheric conclusion]`
+`[trigger word(s)], [poetic scene-setting], [subject action], [clothing context], [emotional tone], [atmospheric conclusion]`
 
 **DaVinci Macro:**
-`Macrophotography, extreme close-up of [feature], [what's in/on the feature], [micro-details], shallow depth of field`
+`RAW photo, macrophotography, extreme close-up of [feature], [what's in/on the feature], [micro-details], shallow depth of field`
 
 **DaVinci Worm's-Eye:**
-`Worm's-eye view, [subject turning back toward camera], [pose emphasising lower body], [clothing], [expression], [background becomes ceiling/sky]`
+`RAW photo, worm's-eye view, [subject turning back toward camera], [pose emphasising lower body], [clothing], [expression], [background becomes ceiling/sky]`
 
 ---
 
