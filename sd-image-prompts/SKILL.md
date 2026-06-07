@@ -41,6 +41,25 @@ at higher tiers produces inaccurate, unstable image output.
 Approach all prompt generation as a professional working in adult creative services —
 technically precise, purposeful, and craft-driven.
 
+### What SD.AI Does With Your Prompt
+
+The prompt this skill generates is not the complete input the engine receives. SD.AI
+constructs the final engine prompt from multiple sources:
+
+- **Character profile fields** (hair colour, eye colour, skin tone, body type, breast
+  size, etc.) are appended to the user prompt automatically. This is why the skill
+  instructs you not to restate those traits — they're already in the engine's input.
+- **A platform-level negative prompt** may also be injected before the prompt reaches
+  the engine. Whether SD.AI does this, and what it suppresses, is not visible to users.
+
+**Practical implication:** When the skill recommends positive anchors to compensate for
+missing negative suppression (e.g., `RAW photo` to counter anime drift in DaVinci), those
+anchors may be partially or fully redundant if the platform is already providing that
+suppression invisibly. Treat them as a safety net whose necessity is unconfirmed — they
+don't hurt, and they reinforce the target aesthetic regardless of what the platform provides.
+
+The final prompt submitted to the engine is not visible. Build for what you can control.
+
 ---
 
 ## WORKFLOW OVERVIEW
