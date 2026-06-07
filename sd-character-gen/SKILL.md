@@ -249,8 +249,9 @@ All generated field content is copy-pasted directly into SD.AI's text fields. Ne
 
 #### Body Type — The Face Generation Hack
 
-During character creation, paste a **3-6 sentence detailed appearance description**
-in the Body Type field. This is guaranteed to influence initial face generation.
+During character creation, paste a **detailed appearance description** in the Body
+Type field. This is guaranteed to influence initial face generation. **500 character
+limit** — keep it dense and specific rather than long; 2-4 sentences is typically enough.
 
 **Creation prompt example:**
 > "Athletic body, extremely beautiful 28-year-old woman, she wears bold and sultry
@@ -515,8 +516,8 @@ Before finalising any Stage 2 character:
 - [ ] About Me implies why the user's presence matters — not self-contained
 
 **Technical:**
-- [ ] Body Type (Creation) uses detailed appearance prompt (3-6 sentences, face generation hack)
-- [ ] Body Type (Final) is 1-2 sentences: physique and skin tone only — no hair, facial features, expression, accessories, height, tattoos, or scars
+- [ ] Body Type (Creation) uses detailed appearance prompt (500 char max — dense and specific, face generation hack)
+- [ ] Body Type (Final) is 1-2 sentences: physique and skin tone only — no hair, facial features, expression, accessories, height, tattoos, or scars (500 char max)
 - [ ] Preset body type label not used for non-standard builds — custom descriptor only (preset labels trigger Picasso Syndrome)
 - [ ] Voice selection matches character background
 - [ ] All fields cohesive with overall character concept

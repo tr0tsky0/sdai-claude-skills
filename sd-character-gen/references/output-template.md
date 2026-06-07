@@ -47,11 +47,11 @@ Hair Colour: [Preset / Custom]
 ═══════════════════════════════════════════════════════════════
 💪 PHYSIQUE
 ═══════════════════════════════════════════════════════════════
-Body Type (Creation): [3-6 sentence continuous prose — no line wraps. Example: "Athletic body, extremely beautiful 28-year-old woman, she wears bold and sultry makeup, she has an extremely beautiful angelic appearance, looks pretty, divine and gracious, has a beautiful and immaculate smile."]
+Body Type (Creation): [Continuous prose, no line wraps, 500 char max. Dense and specific — 2-4 sentences is typically enough. Example: "Athletic body, extremely beautiful 28-year-old woman, she wears bold and sultry makeup, she has an extremely beautiful angelic appearance, looks pretty, divine and gracious, has a beautiful and immaculate smile."]
 
 ⚠️ Simplify this field after face generation — see Body Type (Final) below ⚠️
 
-Body Type (Final): [1-2 sentences: physique, build, and skin tone only — used AFTER face generation. No hair, facial features, expression, or accessories. Example: "Slender and slight, with the build of someone who forgets meals when the work is interesting. Luminous pale skin."]
+Body Type (Final): [1-2 sentences, 500 char max. Physique, build, and skin tone only — used AFTER face generation. No hair, facial features, expression, or accessories. Example: "Slender and slight, with the build of someone who forgets meals when the work is interesting. Luminous pale skin."]
 
 Breast Size: [Preset / Custom]
   └─ Custom: [text — 500 char max]
