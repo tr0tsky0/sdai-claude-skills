@@ -21,12 +21,15 @@
 
 **Ethnicity:** Caucasian | Asian | Indian | Hispanic | Arabic | Black | Custom (500 char)
 
-> ⚠️ Do not use Ethnicity for skin tone/tan — use `"Tan Skin:1.4"` weighted
-> prompt in Body Type field instead.
+> Use Custom to specify exact ethnicity and skin tone in concrete image-generator
+> terms (e.g. `"Korean, fair cool-toned skin"`). Skin tone belongs here, not in Body Type.
 
 ---
 
 ## APPEARANCE
+
+> All appearance and physique fields feed directly into image prompts. Custom text
+> must be concrete visual descriptors — terms the image generator acts on, not prose.
 
 **Eye Colour:** Blue | Green | Brown | Custom (500 char)
 
@@ -41,14 +44,11 @@ Pigtails | Wavy | Bob Cut | Custom (500 char)
 
 **Body Type:** Petite | Athletic | Curvy | Thick | Custom (500 char)
 
-> During creation: use Custom with a 3-6 sentence detailed appearance description
-> to influence face generation. After creation: replace with a 1-2 sentence body
-> description — physique, build, and skin tone only. No hair, facial features,
-> expression, makeup, or accessories.
+> Physique and build only — set once, no pre/post split.
 >
-> ❌ No height | ❌ No persistent accessories | ❌ No tattoos/scars
+> ❌ No height | ❌ No face, hair, skin tone, makeup, or accessories | ❌ No tattoos/scars
 > ❌ Do not use preset labels (Athletic, Curvy, etc.) for non-standard builds — write
-> a custom descriptor to avoid Picasso Syndrome
+> a custom descriptor to avoid VSM Syndrome
 
 **Breast Size:** Flat | Small | Medium | Large | Huge | Custom (500 char)
 
@@ -104,7 +104,9 @@ Nurse | Doctor | Scientist | Police Officer | Welder | Mechanic |
 Maid | Librarian
 
 **Work (Custom):** 5000 char
-> 5-step formula: gig → actions → stakes → friction → motion in scene.
+> **During creation:** detailed facial anatomy (the face hack — ethnic marker with
+> weight, facial shape, nose, lips, cheeks). Replace immediately after creation.
+> **After creation:** 5-step formula: gig → actions → stakes → friction → motion.
 > 2nd person, present tense. No resume buzzwords.
 
 **Hobby (Presets):**

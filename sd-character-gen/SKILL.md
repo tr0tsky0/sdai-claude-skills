@@ -247,62 +247,69 @@ All generated field content is copy-pasted directly into SD.AI's text fields. Ne
 
 ### CRITICAL FIELD MECHANICS
 
-#### Body Type — The Face Generation Hack
+#### Appearance Fields — Write for the Image Generator
 
-During character creation, paste a **detailed appearance description** in the Body
-Type field. This is guaranteed to influence initial face generation. **500 character
-limit** — keep it dense and specific rather than long; 2-4 sentences is typically enough.
+All appearance fields (Ethnicity, Eye Colour, Hair Style, Hair Colour, Body Type, Breast Size, Butt Size) feed directly into image prompts. When using Custom text, write concrete visual descriptors the image generator can act on. Prose belongs in Personality and About Me, not here.
 
-**Creation prompt example:**
-> "Athletic body, extremely beautiful 28-year-old woman, she wears bold and sultry
-> makeup, she has an extremely beautiful angelic appearance, beautiful makeup, looks
-> pretty, divine and gracious, has a beautiful and immaculate smile"
+- ✅ `"warm medium-brown skin"`, `"loose waves past the shoulder"`, `"slender frame, narrow waist"`
+- ❌ `"sun-kissed complexion"`, `"hair like a waterfall"`, `"a body that tells stories"`
 
-**⚠️ AFTER creation:** Replace the detailed prompt with a **1-2 sentence body
-description only** — physique, build, and skin tone if relevant. No hair, no
-facial features, no expression, no makeup, no accessories. The detailed creation
-prompt will persist and interfere with image generation if left in; the simplified
-field governs ongoing image generation and should describe silhouette, not portrait.
+Skin tone belongs in Ethnicity (Custom), not Body Type.
 
-**Post-creation example:**
-> "Slender and slight, with the build of someone who forgets meals when the work
-> is interesting. Luminous pale skin."
+#### Body Type
+
+Set once at creation. Physique and build only — concrete proportions. Breast size and butt size have their own fields; don't duplicate them here.
+
+**Example:**
+> "Slender frame, narrow waist, long limbs. Lean without being muscular."
 
 **Rules:**
-- ❌ No height in Body Type (does nothing)
-- ❌ No persistent accessories like glasses (will appear in ALL images)
-- ❌ No tattoos or scars (may overtake image generation later)
-- ❌ No tan skin in Body Type — like glasses, tattoos, and scars, it gets forced into every image; handle it in image prompts instead
-- ❌ Do not use preset body type labels (Athletic, Curvy, etc.) that trigger
-  Picasso Syndrome if a non-standard build is intended — write a custom descriptor instead
+- ❌ No height (does nothing)
+- ❌ No face, hair, skin tone, expression, makeup, or accessories
+- ❌ No tattoos or scars (may overtake image generation)
+- ❌ Do not use preset labels (Athletic, Curvy, etc.) for non-standard builds — write a custom descriptor to avoid VSM Syndrome
 
-#### Why Pre-Creation Body Type Influences Face Generation
+#### Occupation — The Face Generation Hack
 
-The platform's face compositor extracts and saves face data from the initial PFP generation. During that generation, all active character fields contribute to the render — including Body Type. A detailed appearance prompt in Body Type during creation directly shapes the face that gets extracted and locked as permanent character data. This is a one-time window. Once you leave the creation page the face is frozen regardless of what you subsequently put in the Body Type field.
+All fields are sent to the image generator during initial PFP creation. The platform's face compositor extracts and locks face data from that render — **this is a one-time window.** Once you leave the creation page, the face is permanently frozen regardless of any subsequent field changes.
 
-The post-creation Body Type replacement is not cosmetic housekeeping — it is a functional requirement. The detailed creation prompt left in the field after creation will be appended to every image generation prompt and actively interfere with results, injecting facial descriptor language into shots where you want the engine focused on body, setting, or pose. Replace it immediately after creation.
+**Occupation's 5000-character limit makes it the primary vehicle for face control.** Fill it with detailed facial anatomy during creation, then replace it with real occupation content afterward. The facial anatomy text is appended to every image generation prompt while it remains in the field — replace it immediately after creation.
 
-**The implications for character design:**
+**Two-phase approach:**
+- *During creation:* detailed facial anatomy (see structure below)
+- *After creation:* replace with the 5-step formula (gig → actions → stakes → friction → motion)
 
-- If eye colour matters, specify it in the Body Type creation prompt — it cannot be set or changed by image prompts afterward
-- If specific facial features matter, front-load them in the Body Type creation prompt with as much density as the 500 character limit allows
-- If you want a non-default ethnicity or skin tone reliably locked into the face composite, the creation prompt is where that gets established — the Ethnicity field contributes but the Body Type prompt has more direct influence on the generated face
+**What to include in the creation-phase anatomy prompt:**
 
-**For blank canvas characters:** The face compositing system still locks a face at creation time based on whatever the platform generated from your personality tags, occupation, and hobbies alone. You cannot prevent face locking — you can only influence which face gets locked, during the creation window, before you leave the page. A blank canvas character with no physical fields will have its face determined entirely by occupation, hobbies, and personality tag associations in the platform's training data.
+- **Ethnic marker with weight** — e.g. `(Korean:1.2)`, `(South Asian:1.1)` — more direct than the Ethnicity dropdown alone
+- **Facial shape** — overall structure, proportions, chin projection, jawline curve
+- **Eyes** — eye shape (almond, round, hooded, monolid, etc.), lid type, brow shape and thickness, lash character; Eye Colour has its own field but everything else must be set here
+- **Nose** — bridge height, radix position, dorsal line definition, tip shape and rotation, nostril size and flare; earns its length for non-Western features especially
+- **Lips** — upper/lower fullness balance, cupid's bow character, corner position
+- **Cheeks** — volume placement, cheekbone prominence, how facial planes blend
+- **Permanent facial features** — moles, birthmarks, scars, or any distinctive mark that should be locked into the face composite; this is the only opportunity to bake them in reliably
 
-**The pre-creation Body Type prompt is the single most powerful tool for controlling the locked face.** Use it. Replace it immediately after. These are two separate operations with two separate purposes.
+**What to omit:**
+- Ear anatomy — no meaningful SD training signal at this level
+- Cranial dome or skull shape
+- Lighting-description prose (language that describes a photograph rather than prompts a model)
+- Makeup — unless intentionally baking a look into the face composite; if included, it appears as a persistent baseline and may resist image prompt overrides
 
-#### Occupation & Hobbies — Hidden Face Influence
+**Example (creation phase):**
+> "(Korean:1.2) female, 25 years old, narrow oval face with slightly elongated upper
+> third, softly pointed chin, narrow curved jawline. Low radix, narrow bridge with
+> faint dorsal line, rounded tip slight downward rotation, small oval nostrils minimal
+> flare. Lower lip notably fuller than upper, defined cupid's bow, neutral corners.
+> Moderate upper cheek volume, soft blended facial planes."
 
-Both fields have a **randomised chance** to affect initial appearance during the creation window only. The engine pulls from training data associated with that role or hobby.
+**For blank canvas characters:** The face compositor still locks a face at creation time from whatever the platform generates from your other fields. You cannot prevent face locking — only influence which face gets locked. Filling Occupation with anatomy is the most direct way to do that.
 
+**Hobbies** contribute to the initial PFP through semantic associations with training data — indirect influence through archetype and aesthetic, not anatomy. Choose them with the visual archetype in mind.
+
+**Semantic influence when NOT using the anatomy hack:**
 - `"Pornstar"` → sultry, bold features
 - `"Nun"` → simple, plain features
 - `"Shipwrecked Survivor"` → rough, scarred appearance
-
-**One-time window:** After creation, Occupation and Hobbies no longer affect image generation appearance — but the face they helped produce is locked permanently into the composite system. Choose them with that in mind before leaving the creation page.
-
-Use this intentionally to bias the face generation toward a specific archetype, or use defaults and rely on the Body Type creation prompt instead.
 
 ---
 
@@ -521,7 +528,8 @@ Before finalising any Stage 2 character:
 - [ ] About Me in 1st person — never 2nd or 3rd
 - [ ] Relationship in 2nd person, explicitly connects to the user — never 1st or 3rd
 - [ ] Kinks in 2nd person, formula applied (hunger + power + scene beat) — not a keyword list
-- [ ] Occupation uses 5-step formula (gig → actions → stakes → friction → motion), concrete verbs, no buzzwords
+- [ ] Occupation (Creation) uses detailed facial anatomy (ethnic marker + facial shape + nose + lips + cheeks) — replace with 5-step formula after creation
+- [ ] Occupation (Final) uses 5-step formula (gig → actions → stakes → friction → motion), concrete verbs, no buzzwords
 - [ ] Minimum 10 hobbies in keyword format
 - [ ] No `{{Char}}` notation anywhere — natural 2nd person only
 - [ ] Intimate/sexual content in Kinks only, not Personality
@@ -533,9 +541,8 @@ Before finalising any Stage 2 character:
 - [ ] About Me implies why the user's presence matters — not self-contained
 
 **Technical:**
-- [ ] Body Type (Creation) uses detailed appearance prompt (500 char max — dense and specific, face generation hack)
-- [ ] Body Type (Final) is 1-2 sentences: physique and skin tone only — no hair, facial features, expression, accessories, height, tattoos, or scars (500 char max)
-- [ ] Preset body type label not used for non-standard builds — custom descriptor only (preset labels trigger Picasso Syndrome)
+- [ ] Body Type: physique only, 1-2 sentences — no face, hair, skin tone, accessories, height, tattoos, or scars (500 char max)
+- [ ] Preset body type label not used for non-standard builds — custom descriptor only (preset labels trigger VSM Syndrome)
 - [ ] Voice selection matches character background
 - [ ] All fields cohesive with overall character concept
 - [ ] About Me is custom-written — auto-generated copy is visible and flat
