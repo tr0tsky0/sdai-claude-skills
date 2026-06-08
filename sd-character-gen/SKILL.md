@@ -272,7 +272,7 @@ field governs ongoing image generation and should describe silhouette, not portr
 - ❌ No height in Body Type (does nothing)
 - ❌ No persistent accessories like glasses (will appear in ALL images)
 - ❌ No tattoos or scars (may overtake image generation later)
-- ❌ No skin tone via Ethnicity field for tans — use `"Tan Skin:1.4"` in Body Type instead
+- ❌ No tan skin in Body Type — like glasses, tattoos, and scars, it gets forced into every image; handle it in image prompts instead
 - ❌ Do not use preset body type labels (Athletic, Curvy, etc.) that trigger
   Picasso Syndrome if a non-standard build is intended — write a custom descriptor instead
 
