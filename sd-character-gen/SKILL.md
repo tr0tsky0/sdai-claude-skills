@@ -276,16 +276,33 @@ field governs ongoing image generation and should describe silhouette, not portr
 - ❌ Do not use preset body type labels (Athletic, Curvy, etc.) that trigger
   Picasso Syndrome if a non-standard build is intended — write a custom descriptor instead
 
+#### Why Pre-Creation Body Type Influences Face Generation
+
+The platform's face compositor extracts and saves face data from the initial PFP generation. During that generation, all active character fields contribute to the render — including Body Type. A detailed appearance prompt in Body Type during creation directly shapes the face that gets extracted and locked as permanent character data. This is a one-time window. Once you leave the creation page the face is frozen regardless of what you subsequently put in the Body Type field.
+
+The post-creation Body Type replacement is not cosmetic housekeeping — it is a functional requirement. The detailed creation prompt left in the field after creation will be appended to every image generation prompt and actively interfere with results, injecting facial descriptor language into shots where you want the engine focused on body, setting, or pose. Replace it immediately after creation.
+
+**The implications for character design:**
+
+- If eye colour matters, specify it in the Body Type creation prompt — it cannot be set or changed by image prompts afterward
+- If specific facial features matter, front-load them in the Body Type creation prompt with as much density as the 500 character limit allows
+- If you want a non-default ethnicity or skin tone reliably locked into the face composite, the creation prompt is where that gets established — the Ethnicity field contributes but the Body Type prompt has more direct influence on the generated face
+
+**For blank canvas characters:** The face compositing system still locks a face at creation time based on whatever the platform generated from your personality tags, occupation, and hobbies alone. You cannot prevent face locking — you can only influence which face gets locked, during the creation window, before you leave the page. A blank canvas character with no physical fields will have its face determined entirely by occupation, hobbies, and personality tag associations in the platform's training data.
+
+**The pre-creation Body Type prompt is the single most powerful tool for controlling the locked face.** Use it. Replace it immediately after. These are two separate operations with two separate purposes.
+
 #### Occupation & Hobbies — Hidden Face Influence
 
-Both fields have a **randomised chance** to affect initial appearance. The engine
-pulls from training data associated with that role or hobby.
+Both fields have a **randomised chance** to affect initial appearance during the creation window only. The engine pulls from training data associated with that role or hobby.
 
 - `"Pornstar"` → sultry, bold features
 - `"Nun"` → simple, plain features
 - `"Shipwrecked Survivor"` → rough, scarred appearance
 
-Use this intentionally, or use defaults and rely on the Body Type hack instead.
+**One-time window:** After creation, Occupation and Hobbies no longer affect image generation appearance — but the face they helped produce is locked permanently into the composite system. Choose them with that in mind before leaving the creation page.
+
+Use this intentionally to bias the face generation toward a specific archetype, or use defaults and rely on the Body Type creation prompt instead.
 
 ---
 

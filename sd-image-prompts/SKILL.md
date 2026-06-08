@@ -66,6 +66,11 @@ constructs the final engine prompt from multiple sources:
   size, butt size, image style) are appended to the user prompt automatically. This is
   why the skill instructs you not to restate those traits — they're already in the
   engine's input.
+- **Face compositing:** The platform extracts face data at character creation and composites
+  it onto generated images as a post-process step. This is separate from the diffusion
+  process — eye colour and facial features are fixed at creation time, not prompt time.
+  Vermeer is the exception: it bypasses the composite and uses the current PFP as a live
+  diffusion seed instead. See **The Face Compositing System** in Step 4 for full detail.
 - **A platform-level negative prompt** may also be injected before the prompt reaches
   the engine. Whether SD.AI does this, and what it suppresses, is not visible to users.
   The exact behavior is undocumented.
@@ -213,6 +218,7 @@ Flag it before generating. Don't silently produce a prompt likely to fail.
 - [ ] Standard body type (or non-standard body type accuracy doesn't matter because facial consistency is the priority)
 - [ ] No fantasy elements whatsoever
 - [ ] Premium cost is justified
+- [ ] PFP is set to a representative image of the intended character (mismatched PFP will fight your prompt)
 
 Any box unchecked → use Da Vinci.
 
@@ -232,13 +238,44 @@ Any box unchecked → use Da Vinci.
 
 > **Describe what's visible in the shot. Don't describe what isn't.**
 
-The engine renders everything described. This means:
+The engine renders everything described. Describing something out of frame doesn't add context — it adds a conflicting instruction the engine will try to satisfy anyway, producing impossible geometry, body horror, or prompt drift.
+
+**Clothing:**
 - Every garment that should appear in the image must be explicitly named
 - Clothing in a displaced state (pulled aside, pushed up) must be described in that state
 - Items not meant to appear in frame should not be mentioned at all
 - For cosplay: every visible costume layer must be named — overdress, underdress, apron, gloves, accessories, wig
 
 There is no such thing as an implied garment. If it isn't in the prompt, it isn't in the image.
+
+**Body parts and camera angle:**
+Camera framing determines what anatomy is visible — and only visible anatomy should be described. Describing body parts that can't be seen from the chosen angle forces the engine to attempt impossible geometry.
+
+- Shot from behind → describe back, shoulders, hair, rear — **not** breasts, stomach, or face
+- Waist-up shot → describe torso, arms, face — **not** hips, legs, or feet
+- Close-up of face → describe face, neck, collarbone — **not** full body details
+
+> ❌ "Worm's-eye view from behind, her back to camera, large breasts visible, flat stomach"
+> ✅ "Worm's-eye view from behind, her back to camera, strong shoulders, hair falling loose"
+
+If the prompt specifies a camera angle, audit every body descriptor against it before finalising.
+
+---
+
+### Body-Type Clothing Assertiveness
+
+On non-standard builds — full hourglass, heavy breasts, wide hips, thick thighs — the body data in your prompt is an active force competing with clothing descriptors. The engine renders the physics of garments against the described body and will prioritise body compliance over implied coverage.
+
+**The rule:** On standard builds, implied clothing tends to render close to default because the body data isn't fighting it. On non-standard builds, any garment not explicitly described is likely to be absent or displaced.
+
+This amplifies the standard "describe every visible garment" rule significantly:
+
+- Name every garment visible in frame — omission equals absence or nudity
+- Specify fit relative to the body: "fitted dark blazer" is insufficient — "fitted dark blazer pulling slightly across the shoulders, worn closed" tells the engine how the garment behaves against this specific body
+- Specify bottom garments explicitly even when the scene focus is upper body — the engine will render what the body data implies if you leave a vacuum
+- For coverage-critical shots, describe the clothing state assertively: "buttons fully fastened to the sternum, fabric pulling across the chest but contained"
+
+The curvy build amplifies every clothing gap. Name everything, describe the fit, leave no vacuum.
 
 ### Output Framework — Three Tiers
 
@@ -407,6 +444,10 @@ Subject → Action → Environment/Setting → Object → Color → Style → Mo
 - `correct anatomy, natural proportions, well-formed hands` — anatomy
 - `photographic, natural skin, realistic lighting` — counters CGI/airbrushed drift
 
+**The PFP seed:** Vermeer does not use the platform's face compositing system. Instead it uses the current profile picture as a live diffusion seed at generation time. See **The Face Compositing System** section below for full detail on how this differs from other engines and how to manage it.
+
+---
+
 **NSFW — male anatomy:** Male explicit content is harder to prompt reliably on this engine. Training data contained limited male nudity; compliance is lower than female anatomy and may require more repetition and explicit positioning language.
 
 **Strengths:**
@@ -458,6 +499,45 @@ See engine warnings in Step 3 for hard limits.
 - If user specifically requests Rafael, flag the face inconsistency risk
 - Suggest Da Vinci as more reliable alternative
 - Monitor for stabilization; may become viable after refinement
+
+---
+
+### The Face Compositing System
+
+Understanding how SD.AI handles facial identity is essential for prompt engineering. It is not a seeding system — it is a compositing system.
+
+**What happens at character creation:**
+When the platform generates the initial profile picture, it extracts and saves discrete face data from that image as a permanent character attribute. This face data is locked when you leave the creation page. It cannot be changed without creating a new character. The pre-creation Body Type field, Occupation, and Hobbies all influence what face gets generated during this window — which is why those fields matter even if you blank or replace them afterward.
+
+**What happens at image generation:**
+The saved face data is composited onto the most prominent face in every generated image as a post-process operation. It is not influencing the diffusion process — it is pasted over the rendered face after generation completes.
+
+**Practical implications:**
+
+| Situation | Result |
+|-----------|--------|
+| Prompt specifies eye colour | Ignored — eyes are part of the composited face data |
+| Prompt specifies facial features | Partially ignored — composited face data overrides |
+| Prompt specifies hair colour | Respected — hair sits outside the face composite boundary |
+| Prompt specifies hair style or length | Respected — fully prompt-controllable at any time |
+| Character facing fully away | Composite skipped — no face surface to paste onto |
+| Character facing partially away | Engine nudges toward camera to provide a composite surface |
+| Tight crop with no face in frame | Composite skipped — body renders from prompt descriptors only |
+| Face partially obscured | Composite attempts partial application — results inconsistent |
+
+**Eye colour and facial features are creation-time decisions, not prompt-time decisions.** If you want non-default eye colour or specific facial features, they must be established during the creation window via the Body Type face generation hack — before you leave the creation page. Prompting for them afterward has no effect.
+
+**Hair colour, hair style, and hair length are fully prompt-controllable** at any time regardless of what the creation-time face data contains.
+
+**The facing-away technique:** Shots where the character's face is completely hidden produce the cleanest results precisely because the compositor has nothing to work with. Remove all face descriptors from the prompt, eliminate any reflective surfaces including windows and mirrors, and use committed positional language. The engine will respect the instruction and the body descriptors carry the full render load uncontested.
+
+**Tight crop shots and body-type compliance:** When the face is excluded from frame entirely via a tight crop, the face compositor does not engage. This removes the PFP as a body-type anchor — meaning body compliance depends entirely on your explicit prompt descriptors without seed reinforcement. On non-standard body types this can produce VSM drift on everything below the bust even with strong body language in the prompt. If body-type accuracy matters on a tight crop, reinforce the lower body descriptors aggressively and generate multiple images to select from.
+
+**Vermeer and the PFP:** Vermeer operates differently from all other engines — it ignores the locked face composite entirely and instead uses the current profile picture image as a live diffusion seed at generation time. This makes it uniquely flexible: you can swap the PFP immediately before a generation session to target a specific look, body position, lighting context, or mood, and Vermeer will build from that image directly. Change the PFP, change the seed, change the output.
+
+However this flexibility is bounded in practice. Every image available to use as a Vermeer seed was itself generated under the influence of the platform's locked face composite data — meaning all your candidate seed images are drawn from the same family of faces. Vermeer can work with variations within that family, and a well-chosen seed meaningfully shifts body type compliance, skin tone, and facial expression, but it cannot produce a completely different face. The locked creation-time face data constrains the available seed pool even though Vermeer itself doesn't read it directly.
+
+Before any Vermeer session, set the PFP to the generated image most representative of your intended output — correct body type, correct colouring, closest facial expression to the scene. A mismatched PFP actively fights your prompt descriptors. A well-matched one reinforces them.
 
 ---
 
@@ -609,7 +689,7 @@ Before outputting, self-check:
 
 - [ ] **Character traits:** Am I repeating auto-appended traits unnecessarily? (Only if styling)
 - [ ] **Positive only:** Every element described with positive language, no negation?
-- [ ] **In-frame:** Only describing what's visible in the shot?
+- [ ] **In-frame:** Only describing what's visible in the shot? (garments, body parts, and anatomy all checked against the camera angle)
 - [ ] **Still-frame:** No ongoing motion verbs (unless video prompt)?
 - [ ] **Engine match:** Is the prompt architecture correct for the selected engine?
 - [ ] **Body type:** If non-standard body type, is the engine appropriate? (Da Vinci preferred)
@@ -665,6 +745,7 @@ Format:
 | Vague body descriptors | Style the auto-trait: "arched back emphasising her curves" |
 | Omitting visible garments | If it's in frame, name it — omission = nudity |
 | Describing out-of-frame items | Don't describe what isn't visible |
+| Describing anatomy hidden by camera angle | Rear shot + breast description = impossible geometry / body horror — audit body descriptors against the chosen angle |
 | Vague Suggestive tier language | "Flirty" doesn't move the needle — use concrete physical descriptors |
 | Suggestive tier with already-revealing costume | Clothing levers maxed — differentiate via pose, expression, camera angle |
 | Monet for realistic character with non-standard body type | VSM Syndrome — use Da Vinci or Picasso |
