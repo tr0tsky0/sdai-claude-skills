@@ -3,7 +3,7 @@
 
 Use this template for every Stage 2 character generation output.
 
-**FORMATTING RULE:** All prose field content (Personality, Relationship, Kinks, About Me, Work, Body Type) must be written as continuous prose with no manual line wrapping. Line breaks within a field only between genuine paragraphs. This ensures clean copy-paste directly into SD.AI's text fields.
+**FORMATTING RULE:** Every field must be on a single line with no manual line breaks — content is copy-pasted directly into SD.AI's text fields, and line breaks create unwanted breaks in the destination. The only exception is a genuine paragraph break within a field (e.g. a new paragraph in About Me or Personality).
 
 ---
 
@@ -30,34 +30,30 @@ Name (First): [text]
 Name (Last):  [text]
 
 Ethnicity: [Preset / Custom]
-  └─ Custom: [text — 500 char max]
+  └─ Custom: [Concrete image-generator descriptors. Include skin tone here. Example: "Korean, fair cool-toned skin"]
 
 ═══════════════════════════════════════════════════════════════
 👁️ APPEARANCE
 ═══════════════════════════════════════════════════════════════
 Eye Colour: [Preset / Custom]
-  └─ Custom: [text — 500 char max]
+  └─ Custom: [Concrete image-generator descriptor — colour only; shape/lashes/brows go in Work (Creation). Example: "deep amber with gold flecks"]
 
 Hair Style: [Preset / Custom]
-  └─ Custom: [text — 500 char max]
+  └─ Custom: [Concrete image-generator descriptor. Example: "long loose waves past the shoulder"]
 
 Hair Colour: [Preset / Custom]
-  └─ Custom: [text — 500 char max]
+  └─ Custom: [Concrete image-generator descriptor. Example: "warm auburn with copper highlights"]
 
 ═══════════════════════════════════════════════════════════════
 💪 PHYSIQUE
 ═══════════════════════════════════════════════════════════════
-Body Type (Creation): [Continuous prose, no line wraps, 500 char max. Dense and specific — 2-4 sentences is typically enough. Example: "Athletic body, extremely beautiful 28-year-old woman, she wears bold and sultry makeup, she has an extremely beautiful angelic appearance, looks pretty, divine and gracious, has a beautiful and immaculate smile."]
-
-⚠️ Simplify this field after face generation — see Body Type (Final) below ⚠️
-
-Body Type (Final): [1-2 sentences, 500 char max. Physique, build, and skin tone only — used AFTER face generation. No hair, facial features, expression, or accessories. Example: "Slender and slight, with the build of someone who forgets meals when the work is interesting. Luminous pale skin."]
+Body Type: [Concrete proportions — physique and build only. 500 char max. No face, hair, skin tone, accessories, tattoos, or scars. Example: "Slender frame, narrow waist, long limbs. Lean without being muscular."]
 
 Breast Size: [Preset / Custom]
-  └─ Custom: [text — 500 char max]
+  └─ Custom: [Concrete image-generator descriptor. Example: "full and natural, with soft weight"]
 
 Butt Size: [Preset / Custom]
-  └─ Custom: [text — 500 char max]
+  └─ Custom: [Concrete image-generator descriptor. Example: "round and full, high and firm"]
 
 ═══════════════════════════════════════════════════════════════
 🧠 TRAITS
@@ -78,9 +74,11 @@ Voice: [Preset that matches character background]
 ═══════════════════════════════════════════════════════════════
 💼 LIFESTYLE
 ═══════════════════════════════════════════════════════════════
-Work: [Preset name / Custom]
+Work (Creation): [Concrete image-generator descriptors — not prose. Facial anatomy for the face generation hack. Include: ethnic marker with weight e.g. (Korean:1.2), facial shape, eyes (shape/lid type/brows/lashes), nose (bridge/radix/tip/nostrils), lips (upper-lower balance/cupid's bow/corners), cheeks (volume/planes), permanent features (moles/scars/birthmarks).]
 
-  └─ Custom: [Continuous prose, 2nd person, present tense. 5-step formula: gig → what you do → stakes → friction → motion in scene. Concrete verbs, no buzzwords.]
+⚠️ Replace with Work (Final) immediately after face generation ⚠️
+
+Work (Final): [Continuous prose, 2nd person, present tense. 5-step formula: gig → what you do → stakes → friction → motion in scene. Concrete verbs, no buzzwords.]
 
 Hobbies: [Preset name / Custom]
 
@@ -101,8 +99,8 @@ Memory: [Leave blank for new characters.]
 ✅ PRE-PUBLISH CHECKLIST
 ═══════════════════════════════════════════════════════════════
 □ All prose fields written as continuous prose — no manual line wraps within content
-□ Body Type (Creation) detailed prompt is present
-□ Body Type (Final) is 1-2 sentences: physique and skin tone only — no hair, face, expression, or accessories
+□ Work (Creation) contains facial anatomy descriptors (ethnic marker, facial shape, eyes, nose, lips, cheeks, permanent features)
+□ Work (Final) uses 5-step formula — swap immediately after face generation
 □ About Me written in 1st person
 □ About Me references why the user matters to this character
 □ Relationship written in 2nd person
@@ -125,7 +123,7 @@ Memory: [Leave blank for new characters.]
 
 ## NOTES ON TEMPLATE USE
 
-**Continuous prose rule** applies to: Personality, Relationship, Work, Kinks, About Me, Body Type (Creation), and any Custom appearance fields. These are copy-pasted directly into SD.AI's text fields — manual line wrapping creates unwanted breaks in the destination field.
+**Single-line rule** applies to every field — content is copy-pasted directly into SD.AI's text fields, and manual line breaks create unwanted breaks in the destination. Paragraph breaks are the only exception, used only where a genuine new paragraph is intended.
 
 **Hobbies** is the exception — keyword list format, comma-separated, no prose.
 
