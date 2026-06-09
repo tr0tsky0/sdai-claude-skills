@@ -234,6 +234,30 @@ Any box unchecked → use Da Vinci.
 
 ## STEP 4: BUILD
 
+### USER PREFERENCE: SETTING AS CHARACTER *(apply to every prompt)*
+
+The setting is not a backdrop. It is a co-protagonist. Every prompt must treat the environment with the same level of specificity, intention, and narrative weight as the subject herself.
+
+**The test question:** Does the setting *do* something in this image — tell a story, create tension, establish world, react to the character — or is it just a room she's standing in?
+
+**What this means in practice:**
+
+- **Empty spaces are a last resort.** A character standing in an empty room, on an empty rooftop, against a plain wall — this is a failure of imagination unless emptiness is the point (isolation, minimalism, the void as character). Default toward populated, storied environments.
+- **The setting should have a history.** What happened here before she arrived? What does this space *want*? A study has books with cracked spines and a half-burned candle. A garden has overgrown paths and a fountain that stopped working. A ballroom has chandeliers and masked dancers and black roses. Name the specific things.
+- **The setting should react to the character, or create tension with her.** Light that behaves strangely near her. A space that is too grand for how empty it now is. A crowd that has parted. Architecture that mirrors her emotional state — crumbling but precise, gilded but cold.
+- **Secondary elements carry narrative.** Objects on a desk. People in the background. The thing in the mirror. The door that shouldn't be open. The flowers that bloomed in a circle. These are not decoration — they are sentences in the image's story.
+- **Depth and layers.** Foreground detail, mid-ground subject, background world. All three should be doing work. Shallow depth of field is a tool for intimacy, not an excuse for an empty background.
+
+**Environments that earn their place:**
+- A grand chapel with stained glass casting coloured light across stone — not just "a church"
+- A study at midnight with a half-empty wine glass, wax seals, and letters already closed — not just "a room with a desk"
+- A masquerade ballroom with chandelier light, masked guests, and black rose archways — not just "a ballroom"
+- A fae threshold where the forest beyond glows wrong and the roots have broken through the floor — not just "a doorway"
+
+**Prompt construction rule:** For every prompt, write the setting description *first*, in the same detail as the character description. If the setting paragraph is shorter than the character paragraph, it needs more work.
+
+---
+
 ### The Fundamental Rule — What's In Frame
 
 > **Describe what's visible in the shot. Don't describe what isn't.**
@@ -588,6 +612,26 @@ State the core action 3–4 times using different phrasings:
 
 **Example:**
 > She straddles him. Her body rocks in a slow, deliberate rhythm. She's positioned with him fully inside her, hips pressing down with each motion. The pace is deep and controlled.
+
+---
+
+### Multi-Character Explicit Scenes — Positioning Protocol
+
+**Finding:** Vague action language ("kissing her," "going down on her") produces unreliable anatomy and incorrect geometry in multi-character explicit scenes. The engine guesses spatial relationships and frequently misrenders.
+
+**Solution — Joint-by-joint positioning:** Treat every body part as a variable that must be explicitly assigned a location, state, and relationship to another body part. Leave no positional vacuum.
+
+**Template:**
+- Every hand: where is it, what surface is it touching, what is it doing
+- Every mouth: what is it pressed against, what direction is it facing
+- Every limb: position relative to the other character's body
+- The standing/kneeling/lying relationship between characters must be stated explicitly
+
+**Example (weak):** "the kneeling woman going down on her"
+
+**Example (strong):** "the kneeling woman's face pressed between the standing woman's thighs, mouth on her pussy, right hand flat against the standing woman's inner left thigh holding it open, left hand steadying herself against the floor"
+
+The prompt that is pleasurable to read as prose is usually the prompt that produces correct anatomy — specificity that makes prose vivid is the same specificity that closes the engine's interpretive gaps.
 
 ---
 
