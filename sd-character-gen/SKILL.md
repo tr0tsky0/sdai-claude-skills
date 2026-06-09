@@ -158,27 +158,16 @@ If they say "surprise me" or leave it unspecified: default to Standard unless th
 
 For World Characters only. Ask before Stage 1.
 
-Ask these three questions together in a single message:
+Ask these three questions together in a single message. The examples below are starting points — the user can pick one, combine several, ignore them entirely, or describe something different.
 
-**Q1 — World flavour** (single select):
-- Dark & gothic — shadows, old curses, beautiful monsters
-- Mythic & arcane — ancient magic, forgotten gods, prophecy
-- Urban supernatural — magic hidden inside the modern world
-- Fae & otherworldly — courts, bargains, things that aren't quite human
-- Sci-fi / near future — technology as the uncanny
-- Historical / period — magic in another era
+**Q1 — World flavour:** What's the texture of this world?
+*(e.g. dark & gothic / mythic & arcane / urban supernatural / fae & otherworldly / sci-fi or near future / historical — or describe your own)*
 
-**Q2 — User's role** (single select):
-- Ordinary person pulled into something they don't understand
-- Someone with power they haven't fully reckoned with
-- An outsider — hunter, investigator, skeptic
-- A known player in this world — peer, rival, ally
+**Q2 — User's role:** How does the user fit into this world?
+*(e.g. ordinary person pulled in / someone with power they haven't reckoned with / outsider or investigator / known player — or describe your own)*
 
-**Q3 — World tone** (single select):
-- Dangerous — choices have real consequences, things can go wrong
-- Seductive — the world wants something from you specifically
-- Conspiratorial — everyone knows more than they're saying
-- Layered — nothing is what it first appears to be
+**Q3 — World tone:** What feeling should the world carry?
+*(e.g. dangerous / seductive / conspiratorial / layered — or describe your own)*
 
 Use the answers to shape the hook, character, and world bible. The world flavour
 informs setting and secondary characters. The user's role determines how the
