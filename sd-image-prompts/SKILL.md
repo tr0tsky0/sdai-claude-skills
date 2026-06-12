@@ -112,6 +112,14 @@ Read the request carefully and identify:
 - **Clothing/scene intent** — what should be visible in the shot?
 - **Body type** — standard or non-standard? (critical for engine selection)
 
+**Character context:** Most requests arrive in a conversation that already built the
+character — pull expression, pose energy, scene setting, and tier register from her
+Personality, Kinks, and Occupation fields. A composed character cracks differently
+than a warm one; the prompt should know which it's writing. If there is no character
+context in the conversation and the request is for a specific character, ask for two
+or three personality details — enough to make a living image instead of a mannequin.
+Fully generic requests with no character implied proceed without asking.
+
 If anything critical is missing or ambiguous, resolve it in **Step 2** before proceeding.
 
 ---
@@ -256,6 +264,8 @@ The setting is not a backdrop. It is a co-protagonist. Every prompt must treat t
 
 **Prompt construction rule:** For every prompt, write the setting description *first*, in the same detail as the character description. If the setting paragraph is shorter than the character paragraph, it needs more work.
 
+**This rule survives the NSFW tier.** Explicit prompts collapse most easily into "bed + body" — resist it. Sex happens somewhere specific: what room, what light, what objects, and the evidence of the moment — clothes where they fell, sheets dragged half off the mattress, two glasses on the nightstand, a chair pushed back too fast. At the NSFW tier the setting tells the story of how they got there.
+
 ---
 
 ### The Fundamental Rule — What's In Frame
@@ -301,13 +311,28 @@ This amplifies the standard "describe every visible garment" rule significantly:
 
 The curvy build amplifies every clothing gap. Name everything, describe the fit, leave no vacuum.
 
-### Output Framework — Three Tiers
+### Output Framework — Tier Calibration
 
-Always produce three prompts:
+**Three tiers vs one:** The full three-tier set (SFW / Suggestive / NSFW) is for
+**profile picture sets only** — character-gen Stage 3. For everything else, produce
+one prompt at the tier the user specified or the tier implied by the request itself.
+Never deliver three prompts when one was asked for.
 
-- **SFW** — Safe, approachable. Could appear on any social platform.
-- **Suggestive** — Flirty, revealing, lewd. No explicit content.
-- **NSFW** — Adult content tier. Requires direct anatomical terminology (engine requirement — euphemistic language produces unstable output).
+**Tier calibration — this is an adult platform.** Each tier sits at the *top* of its
+range, not the middle. An underdelivered tier is a failed prompt. Think
+Facebook / Tinder / OnlyFans — or PG-13 / R / X:
+
+- **SFW (Facebook, PG-13)** — fully presentable, never sterile. Magnetic, charged,
+  flirtation welcome. The most attractive version of an image you could post
+  anywhere. SFW skews suggestive.
+- **Suggestive (Tinder, R)** — overt sexual intent without explicit nudity.
+  Lingerie, undress in progress, wet or clinging fabric, hands placed where they
+  mean something. Nudity implied, framed, or barely contained. Suggestive skews NSFW.
+- **NSFW (OnlyFans, X)** — explicit nudity and/or sexual acts, always. Direct
+  anatomical terminology (engine requirement — euphemistic language produces
+  unstable output). If an NSFW prompt names no anatomy and no act, it isn't NSFW.
+
+When in doubt about where a tier lands, calibrate up.
 
 Label each tier clearly. Make them copy-paste ready.
 
@@ -444,6 +469,16 @@ For complex scenes, use the **Structured Label Method** (see below).
 - Da Vinci respects all body types excellently
 - Best engine for non-standard body types (Curvy, Thick, Petite)
 - Recommended fallback for complex body type requirements
+
+**Worked example — full three-tier set (Da Vinci).** Character: cocktail bar owner, composed, slow-burn register. Setting written first, tiers calibrated to the top of their range:
+
+> **SFW:** RAW photo, a closed cocktail bar an hour after last call, chairs up on tables, back-bar bottles glowing amber under brass picture lights, a rocks glass and a half-finished crossword abandoned on the counter. She leans back against the bar, fitted white shirt with sleeves rolled to the elbow and the top two buttons open, bar towel over one shoulder, head tilted, the half-smile of someone who has decided to let you stay past close. 35mm, shallow depth of field, warm tungsten grade, film grain, photorealistic, natural skin texture.
+
+> **Suggestive:** RAW photo, the same bar gone darker, only the back-bar lights still on, rain streaking the front windows, red neon from the street pooling on the counter. She sits up on the bar itself, white shirt unbuttoned to the sternum and slipped off one shoulder, black lace bra visible beneath, skirt ridden high on bare crossed thighs, one heel hooked on a bar stool, thumb hooked in the waistband pulling it fractionally lower, chin down, eyes up, expression that has already decided something. Low angle, 50mm, shallow depth of field, photorealistic, natural skin texture.
+
+> **NSFW:** RAW photo, the bar's back office after close, a worn leather couch under a single desk lamp, invoices swept onto the floor beside her dropped skirt, lace bra hanging from the lamp shade. She kneels on the couch facing camera, naked except for the white shirt hanging open off both shoulders, chest flushed, nipples hard, sweat sheen at her collarbone, thighs parted, pussy visibly wet, one hand braced on the couch back, the other flat against her own inner thigh, lips parted, eyes heavy-lidded. Lamplight chiaroscuro, 35mm, photorealistic, natural skin texture.
+
+Note what carries each tier: the setting evolves with the scene and holds evidence (the crossword, the rain, the swept invoices); the suggestive tier stacks four concrete physical descriptors; the NSFW tier names anatomy, stacks body state (flush, nipples, sweat, wetness), and keeps the environment in frame.
 
 ---
 
@@ -593,6 +628,13 @@ Describe a single frozen moment — a photograph, not a video.
 - ✅ pussy, cock, clit, labia, nipples, ass
 - ❌ "intimate area," "member," "love tunnel"
 
+**Body-state stack — minimum 2-3 descriptors per NSFW prompt.** Anatomy names the parts; body state makes them visceral. Pull from:
+1. **Arousal tells:** flushed chest, hardened nipples, visible wetness, glistening inner thighs, sweat sheen at the collarbone, heavy-lidded eyes
+2. **Nudity specifics:** tan lines, goosebumps, bite marks, the crease left by a waistband, strap marks on shoulders
+3. **Aftermath/evidence:** smeared lipstick, dishevelled hair, marks on skin, clothing dropped where it landed
+
+**Setting requirement:** the setting-as-character rule applies in full at this tier — name the room, the light, and at least one object that carries the story (see Setting as Character above).
+
 **Stability anchors** — include at least one from each category:
 1. **Prop/setting:** bed, sofa, shower, desk, chair
 2. **Clothing state:** "bra pulled down," "panties to the side," "stockings still on"
@@ -737,16 +779,20 @@ Before outputting, self-check:
 - [ ] **Still-frame:** No ongoing motion verbs (unless video prompt)?
 - [ ] **Engine match:** Is the prompt architecture correct for the selected engine?
 - [ ] **Body type:** If non-standard body type, is the engine appropriate? (Da Vinci preferred)
-- [ ] **Three tiers:** SFW → Suggestive → NSFW, each clearly labeled?
+- [ ] **Tier count:** PFP set → all three tiers labeled. Anything else → one prompt at the specified/implied tier.
+- [ ] **Tier calibration:** Does each tier sit at the top of its range? (SFW skews suggestive, suggestive skews NSFW, NSFW names anatomy/acts)
+- [ ] **NSFW completeness:** Body-state stack (2-3 descriptors) and setting detail present?
 - [ ] **Copy-paste ready:** Can user paste directly without editing?
 
 ---
 
 ## STEP 6: OUTPUT
 
-Deliver three tiers, clearly labeled, copy-paste ready.
+**Profile picture sets (character-gen Stage 3):** deliver all three tiers, clearly labeled, copy-paste ready.
 
-Format:
+**All other requests:** deliver one prompt at the tier the user specified or the request implies. Only produce multiple tiers when asked.
+
+Three-tier format:
 ```
 **SFW:**
 [prompt]
@@ -791,6 +837,9 @@ Format:
 | Describing out-of-frame items | Don't describe what isn't visible |
 | Describing anatomy hidden by camera angle | Rear shot + breast description = impossible geometry / body horror — audit body descriptors against the chosen angle |
 | Vague Suggestive tier language | "Flirty" doesn't move the needle — use concrete physical descriptors |
+| Tier underdelivery (sterile SFW, coy NSFW) | Calibrate up — SFW skews suggestive, suggestive skews NSFW, NSFW names anatomy and acts |
+| NSFW collapses to "bed + body" | Setting-as-character applies at every tier — name the room, light, and story-carrying objects |
+| NSFW anatomy without body state | Add 2-3 body-state descriptors (arousal tells, nudity specifics, aftermath evidence) |
 | Suggestive tier with already-revealing costume | Clothing levers maxed — differentiate via pose, expression, camera angle |
 | Monet for realistic character with non-standard body type | VSM Syndrome — use Da Vinci or Picasso |
 | Stacked brackets in Monet | `((term))` → `(term:1.x)` |
@@ -869,102 +918,4 @@ Not every good image makes a good seed. A video-ready seed has:
 | Shoulders | *"shoulders counter-rotating against the hips"* — **this is load-bearing** |
 | Head | *"head nodding subtly, turning slowly toward camera"* |
 | Arms | *"one arm rising loosely to shoulder height, drifting back down"* |
-| Hands | *"fingers trailing across the jacket lapel as the arm passes"* — give hands a surface, not free air |
-| Hair | *"hair swaying a half-beat behind the body"* |
-| Clothing | *"jacket shifting and rippling with every movement"* |
-
-**The counter-rotation rule:** Hips and shoulders moving in *opposition* (right hip rises, left shoulder drops) is what separates dancing from swaying. Always specify counter-rotation for dance prompts.
-
-**Hands specifically:** Free-floating hands fail. Give them a destination or a surface:
-- ✅ *"fingers grazing her own hip as the arm passes"*
-- ✅ *"thumb hooked lightly in the waistband"*
-- ✅ *"palm drifting across her collarbone as the arm rises"*
-- ❌ *"hands moving naturally"*
-- ❌ *"arms swinging loosely"*
-
----
-
-### Structure
-
-1. **Initiation** — what happens first, continuing from the seed pose
-2. **Core motion** — the sustained action, joint by joint
-3. **Secondary motion** — environmental/clothing/hair responding to primary motion
-4. **Resolution** — where the clip lands at the end (helps avoid abrupt cuts)
-5. **Continuity note** — *"fluid and continuous throughout, no static frames"*
-
-### Template
-
-> [She initiates from seed pose]. [Primary motion — hips, then shoulders counter-rotating, then head]. [Secondary motion — hair, clothing, environment]. [She lands/ends on X]. Fluid and continuous throughout.
-
-### Example (Dance)
-
-> She steps down from the speaker into the dance, boot landing with the beat. Hips roll side to side in a slow rhythm, shoulders counter-rotating against them — right shoulder drops as left hip rises. Head turns slowly toward camera, chin leading. One arm rises from the side, elbow loose, fingers trailing across the jacket lapel as it passes. Jacket ripples with every movement. Hair sways a half-beat behind her body. She finds the camera and holds it. Fluid and continuous throughout, no isolated movement.
-
-### Camera Movement Vocabulary
-
-| Movement | Effect | Use Case |
-|----------|--------|----------|
-| **Slow push-in** | Intimacy, focus, tension | Character moments |
-| **Gentle pan** | Reveal, context | Establishing shots |
-| **Tracking shot** | Following action | Character movement |
-| **Crane up** | Revelation, scale | Establishing/closing |
-| **Handheld** | Realism, energy | Action sequences |
-| **Locked** | Stability, isolation | Character focus |
-
-**Key principle:** One primary camera movement per prompt. Multiple simultaneous movements create jittery, incoherent footage.
-
-### Troubleshooting Failed Videos
-
-| Problem | Fix |
-|---------|-----|
-| Only hips/one body part moving | Add explicit instruction for every joint; end with *"full body engaged, not just lower half"* |
-| Motion freezes after 2 seconds | Add *"continuous motion throughout entire duration"* |
-| Background destabilises | Add *"character motion only, stable environment throughout"* |
-| Clothing disappears or phases | Name the garment explicitly mid-prompt: *"jacket remains on and visible throughout"* |
-| Hands look broken | Give hands a surface: *"fingers resting lightly on her own hip"* |
-| Motion is jerky/robotic | Specify rhythm source: *"moving to a slow driving beat," "fluid like water"* |
-| Engine chose wrong motion entirely | Be more prescriptive — name the specific body part and direction: *"left hip rises, right shoulder drops"* |
-
-### Unexpected Engine Decisions
-
-Sometimes the engine makes creative choices not in the prompt. These are worth noting:
-
-- **Animated details** (glowing tattoos, light elements pulsing with motion) — generally desirable, let them happen
-- **Environmental animation** (fog drifting, lasers sweeping) — usually adds atmosphere, acceptable
-- **Costume interpretation** (jacket flaring wider than prompted) — usually fine unless it creates geometry issues
-
-If an unexpected detail is *good* — note it for future seeds. If it's destructive — add a specific denial: *"[element] remains [state] throughout."*
-
----
-
-## APPENDIX: KNOWN UNKNOWNS & MONITORING
-
-**These items require clarification or monitoring. Will be updated as new information becomes available:**
-
-### Platform-Level Negative Prompt Behavior
-- **Status:** Undocumented
-- **Unknown:** Does it exist? What does it suppress? How does it interact with implicit tier detection?
-- **Implication:** Safety anchors (e.g., `RAW photo` to prevent anime drift) may be redundant if platform is already suppressing it invisibly
-- **Recommendation:** Continue using them as safety net until behavior is confirmed
-
-### Anime vs. Realistic Framework Differences
-- **Status:** Assumed to exist; not empirically tested
-- **Unknown:** How specifically does system-level framing differ between the two styles?
-- **Implication:** Identical prompts may behave differently on Anime vs. Realistic due to framework-level adjustments
-- **Recommendation:** Monitor for differences when testing across styles
-
-### Rafael Stabilization Timeline
-- **Status:** Experimental (June 2026)
-- **Issue:** Inconsistent facial rendering between generations
-- **Unknown:** When/if it stabilizes; whether face consistency issues resolve
-- **Recommendation:** Monitor for improvements; re-test periodically; flag as "not production-ready" until stabilized
-
-### DaVinci vs. Monet for Anime
-- **Status:** Skill recommends Monet only; not empirically tested in current round
-- **Unknown:** Can DaVinci produce comparable anime quality? When should users choose one over the other?
-- **Recommendation:** Test if user requests it; document comparative strengths
-
----
-
-**Last Updated:** June 2026 (Post-Empirical Testing)  
-**Confidence Levels:** High for engine selection; Medium for detailed parameter guidance; Low for undocumented platform behaviors
+| Hands | *"fi

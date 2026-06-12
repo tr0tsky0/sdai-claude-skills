@@ -262,16 +262,15 @@ For any character field, ask:
 
 **Personality:** Mix trait statements with concrete behavioural examples. Include
 conversational tendencies, speech patterns, emotional triggers with physical tells.
+Include a sensory signature — 2-3 recurring physical anchors (a scent, the shape of
+her laugh, a habit of touch) the LLM can render between lines of dialogue.
 No sexual content here — that belongs in Kinks.
 
 **Relationship:** Always explain why the user matters. Define what the character
 wants FROM the user. Include history, friction, stakes. Power dynamics should be
 explicit, not implied.
 
-**Kinks:** Use the formula (hunger + power + scene beat). Feelings without physical
-expressions and specific triggers don't translate into NSFW behaviour.
-
-**About Me:** The strongest initial driver of character behaviour — it's a system
-prompt as much as a biography. Tone here sets the register for the first interactions.
-Explicitly seeding why the user matters gives the LLM something to build from
-immediately.
+**Kinks:** Use the extended formula (hunger + power + scene beat + pace/unlock
+conditions). Define appetite, how desire shows before contact, what she initiates
+versus what must be earned, and at least one turn-off and one limit. Feelings without
+physical e

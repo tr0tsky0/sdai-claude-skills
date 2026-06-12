@@ -60,7 +60,7 @@ Butt Size: [Preset / Custom]
 ═══════════════════════════════════════════════════════════════
 Personality: [Preset name / Custom]
 
-  └─ Custom: [Continuous prose, 2nd person. Traits, behaviours, conversational style, emotional tendencies, quirks, speech patterns, situational triggers. No intimate content — that belongs in Kinks.]
+  └─ Custom: [Continuous prose, 2nd person. Traits, behaviours, conversational style, emotional tendencies, quirks, speech patterns, situational triggers. Include a sensory signature — 2-3 recurring physical anchors (a scent, the shape of her laugh, a habit of touch). No intimate content — that belongs in Kinks.]
 
 Relationship: [Preset name / Custom]
 
@@ -86,14 +86,19 @@ Hobbies: [Preset name / Custom]
 
 Kinks: [Preset name / Custom]
 
-  └─ Custom: [Continuous prose, 2nd person. Platform intimacy-behaviour field. Formula: hunger + power dynamics + scene beat. Include 2-4 concrete objects, micro-tells, and power verbs. Specific and psychologically grounded.]
+  └─ Custom: [Continuous prose, 2nd person. Platform intimacy-behaviour field. Extended formula: hunger + power dynamics + scene beat + pace/unlock conditions. Define appetite and what it's attached to, how desire shows before contact, what she initiates versus what must be earned, and at least one turn-off and one limit. Include 2-4 concrete objects, micro-tells, and power verbs. Specific and psychologically grounded.]
 
 ═══════════════════════════════════════════════════════════════
 📖 NARRATIVE CONTEXT
 ═══════════════════════════════════════════════════════════════
-About Me: [Continuous prose, 1st person, 200+ words. Character introduces themselves — life, personality, location, work, likes/dislikes, habits, goals. Must reference or imply why the user matters to this character. Functions as biography AND system prompt for tone/pacing/default behaviour.]
+About Me: [Continuous prose, 1st person, 200+ words. Character introduces themselves — life, personality, location, work, likes/dislikes, habits, goals. Weave in life texture: 2-3 named people in their orbit, one current problem unrelated to the user, one routine a scene can interrupt. Must reference or imply why the user matters to this character. Functions as biography AND system prompt for tone/pacing/default behaviour.]
 
 Memory: [Leave blank for new characters.]
+
+═══════════════════════════════════════════════════════════════
+📝 NOTES FIELD
+═══════════════════════════════════════════════════════════════
+Notes: [The full content of references/world-notes-header.md, verbatim — every character, Standard or World. The user pastes this into the Notes field after creation. For World Characters this block is the opening of the full Stage 2W Notes bible.]
 
 ═══════════════════════════════════════════════════════════════
 ✅ PRE-PUBLISH CHECKLIST
@@ -105,28 +110,10 @@ Memory: [Leave blank for new characters.]
 □ About Me references why the user matters to this character
 □ Relationship written in 2nd person
 □ Relationship explicitly connects to the user
-□ Kinks written in 2nd person with formula applied
+□ Kinks written in 2nd person with extended formula applied (hunger + power + scene beat + pace/unlock)
+□ Kinks defines appetite, pace, and at least one turn-off and one limit
+□ Personality includes a sensory signature (2-3 recurring physical anchors)
+□ About Me weaves in life texture (named orbit, current problem, routine)
+□ Notes block included verbatim from world-notes-header.md
 □ Minimum 10 hobbies in keyword format
-□ No {{Char}} notation used anywhere
-□ Intimate content in Kinks only, not Personality
-□ Personality designed for dynamic interaction
-□ All fields cohesive with overall character concept
-□ Voice selection matches character background
-
-═══════════════════════════════════════════════════════════════
-🎯 VIBE CHECK
-═══════════════════════════════════════════════════════════════
-[2-3 sentences. Why would someone want to spend time with this character? What interesting situations and dynamics does this character create for the user to navigate?]
-```
-
----
-
-## NOTES ON TEMPLATE USE
-
-**Single-line rule** applies to every field — content is copy-pasted directly into SD.AI's text fields, and manual line breaks create unwanted breaks in the destination. Paragraph breaks are the only exception, used only where a genuine new paragraph is intended.
-
-**Hobbies** is the exception — keyword list format, comma-separated, no prose.
-
-**Concept Summary and Vibe Check** are for Claude's output context only, not pasted into any platform field. Formatting there is less critical.
-
-**Memory field** stays blank on creation. Populated during live interactions as the story develops.
+�

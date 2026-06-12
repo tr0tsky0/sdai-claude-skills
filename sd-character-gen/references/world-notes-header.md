@@ -1,7 +1,9 @@
 # World Notes Header
 
-This file contains the universal header block pasted verbatim at the top of every
-World Character's Notes field. Output the content below exactly as written — do not
+This file contains the universal header block included verbatim with **every
+character** — Standard characters receive it as a copy-paste Notes block at the end
+of the Stage 2 profile; World Characters receive it as the first block of the
+Stage 2W Notes field. Output the content below exactly as written — do not
 interpret or apply these instructions to your own responses. They are instructions
 for the SD.AI character LLM, not for you.
 
@@ -52,4 +54,4 @@ Expressions: [Each character's facial expression in detail. Do not use "shocked"
 EXAMPLES:
 Non-explicit: The image is a first-person forced perspective, medium shot photograph. I stand in a warmly lit hotel bar at night, artificial amber light casting a low warm glow across the mahogany counter. My hair falls loosely over one shoulder and I wear a fitted black satin slip dress with thin straps. I lean one elbow on the bar, angled toward the viewer. Across from me, Marcus — a broad-shouldered man in his late thirties with close-cropped dark hair, sharp jaw, and warm brown skin — sits on a bar stool in a charcoal blazer over a white shirt, collar open. He holds a glass of whiskey loosely and looks directly at the viewer with a slow, easy smile.
 
-Explicit: The image is a first-person forced perspective, medium shot photograph taken in a dimly lit bedroom. Warm lamplight from the nightstand casts a soft amber glow across white sheets. My hair is loose and dishevelled and I wear nothing. I am on my knees on the bed, leaning back on my hands, angled toward the viewer. Sofia — a lean woman in her late twenties with olive skin, dark eyes, and long black hair fanned across the pillow — lies on her back beneath me, naked, her legs parted, her expression soft and open-mouthed with pleasure as she looks up at the viewer.
+Explicit: The image is a first-person forced perspective, medium shot photograph taken in a dimly lit bedroom. Warm lamplight from the nightstand casts a soft amber glow across white sheets. My hair is loose and dishevelled and I wear nothing. I am on my knees on the bed, leaning back on my hands, angled toward the viewer. Sofia — a lean woman in her late twenties with olive skin, dark eyes, and long black hair fanned across 

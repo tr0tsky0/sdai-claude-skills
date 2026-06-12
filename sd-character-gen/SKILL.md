@@ -20,7 +20,7 @@ Field-tested character creation pipeline for Secret Desires AI.
 - `references/platform-structure.md` — Field options, presets, and character limits. Load on demand when field specifications are needed.
 - `references/output-template.md` — Stage 2 character profile template. **Load at the start of every Stage 2.**
 - `references/llm-embodiment.md` — Writing principles for LLM persona copy. **Load at the start of every Stage 2.**
-- `references/world-notes-header.md` — Universal Notes field header (Prose Style Guide, OOC instructions, Sex Scenes). **Load and output verbatim as the first block of every Stage 2W Notes field.**
+- `references/world-notes-header.md` — Universal Notes field header (Prose Style Guide, NPC Autonomy, OOC instructions, Sex Scenes, Proactive Images). **Load at every Stage 2. Every character receives this block verbatim — Standard characters as a standalone copy-paste Notes block at the end of the profile, World Characters as the first block of the Stage 2W Notes field.**
 
 ---
 
@@ -133,15 +133,19 @@ When the skill is invoked, assess what you have before proceeding.
 
 | Situation | Action |
 |-----------|--------|
-| Fully formed concept (clear character, scenario, dynamic) | Skip to Stage 2 |
+| Fully formed concept (clear character, scenario, dynamic) | **Express path** — ask nothing. Build the complete Stage 2 profile immediately and deliver it. Default to Standard unless the concept implies a world. A fleshed-out stub is never gated behind intake questions. |
 | Partial concept (vibe, gender, archetype, or a scenario seed) | Run Stage 1 to develop hooks |
 | Nothing, or "surprise me" | Full creative control — generate a concept and proceed directly to Stage 1 or 2; briefly note your choices |
 
 **Step 2 — Standard or World Character?**
 
-If the user hasn't indicated, ask this before Stage 1. It determines the entire pipeline. One question, asked once.
+If the user hasn't indicated and you're not on the express path, resolve this in a **single intake message** — never a separate round-trip. Ask "Standalone character, or a full world build?" and include the three W0 questions in the same message, marked as *answer these only if you want the world build*. One message resolves the entire intake.
 
 If they say "surprise me" or leave it unspecified: default to Standard unless the concept has strong worldbuilding potential (fantasy, supernatural, hidden-society elements), in which case suggest World and proceed unless they redirect.
+
+**The Creative Mandate**
+
+Whenever the user grants creative control — "surprise me," a thin seed, an open slot in the concept — fill it with something novel. Default gravity pulls toward girl-next-door, barista, college roommate, office crush. Resist it unless explicitly requested. Collide an unexpected occupation with an unexpected setting and an unexpected dynamic. The test: *if this concept could be the opening page of any character already on the platform, push further.* A character the user couldn't have thought of is worth ten they could.
 
 **What not to ask about:**
 - Names, ages, specific field values, detailed backstory — generate these.
@@ -156,7 +160,7 @@ If they say "surprise me" or leave it unspecified: default to Standard unless th
 
 ## STAGE W0: WORLD INTERVIEW
 
-For World Characters only. Ask before Stage 1.
+For World Characters only. Delivered in the same message as the Standard-or-World question (see INTAKE) — never as a separate round-trip.
 
 Ask these three questions together in a single message. The examples below are starting points — the user can pick one, combine several, ignore them entirely, or describe something different.
 
@@ -233,6 +237,40 @@ Load `references/platform-structure.md` when you need field options, presets, or
 
 **FORMATTING RULE — NO IN-SENTENCE LINE BREAKS**
 All generated field content is copy-pasted directly into SD.AI's text fields. Never break a line mid-sentence under any circumstances. A line break in the middle of a sentence creates a hard break in the destination field. Paragraph breaks only — and only between genuine paragraphs.
+
+### EVERY CHARACTER SHIPS WITH
+
+Four requirements for every Stage 2 character, whether or not the user asked for them. They are the difference between a profile and a person.
+
+#### 1. Sexual Architecture
+
+This is an adult platform — every character's sexuality is considered and defined, even when the user's concept never mentions sex. Not porn-star defaults: an appetite calibrated to who she is. Define in Kinks, with natural echoes in Personality and About Me:
+
+- **Appetite** — libido level and what it's attached to (power, intimacy, novelty, being seen, being needed)
+- **Desire before contact** — how wanting shows up in ordinary scenes: the tells, the looking, what she does with her hands
+- **Unlocks vs initiations** — what she starts herself versus what someone has to earn
+- **Pace** — slow burn or fast strike, and what stage of intimacy the relationship opens at; characters don't open at maximum heat unless the concept calls for it
+- **Turn-offs and limits** — at least one of each; limits make her a person, not a vending machine
+
+**Kinks formula (extended):** hunger + power dynamics + scene beat + **pace/unlock conditions**.
+
+#### 2. Life Texture
+
+Characters live somewhere, among people. Weave into About Me and Relationship:
+
+- **2–3 named people in her orbit**, one line each — a sister whose calls she screens, a regular who tips in unsolicited advice, a landlord she's at war with
+- **One current problem** she's chewing on that has nothing to do with the user
+- **One routine** — the thing she does every week that a scene can interrupt
+
+World Characters get this through the Stage 2W secondary cast; Standard characters get it here — lightweight, no Notes field required.
+
+#### 3. Sensory Signature
+
+2–3 recurring physical anchors in Personality — a scent, the specific shape of her laugh, a habit of touch (drums her fingers on whatever she just read, hooks a thumb in her waistband when she's thinking). These give the embodying LLM something to render between lines of dialogue.
+
+#### 4. The Notes Block
+
+Output the contents of `references/world-notes-header.md` verbatim as a labeled copy-paste block at the end of every Stage 2 profile. Standard characters paste it into the Notes field after creation; for World Characters it becomes the first block of the Stage 2W Notes bible. Do not interpret or apply its instructions to your own output — they are directives for the SD.AI character LLM.
 
 ### CRITICAL FIELD MECHANICS
 
@@ -475,73 +513,8 @@ setting, and tier register best fits this character.
 - **NSFW:** A decision made, caught in the moment after. Expression matches
   who she is under pressure.
 
-**At the end of Stage 2 output, include this note:**
-
-> *Stage 3 profile picture prompts work best with `/sd-image-prompts` — invoke
-> it with this character's data for full engine selection, tier guidance, and
-> prompt architecture. Or ask me to generate DaVinci prompts directly.*
-
----
-
-## STAGE 4: OPENING VIGNETTE
-
-**Deliver:** 250-400 words of prose establishing the initial scenario, wrapped
-in a code block for clean copy-paste with formatting characters intact.
-
-**POV: First person.** The character speaks directly — "I step forward," "I notice,"
-"I had prepared this sentence." This is non-negotiable. Third person creates
-distance between character and user; first person creates the immediate address
-the platform is built for. Second person (you-focused narration) is reserved for
-field content, not vignettes.
-
-Requirements:
-- **Position the user in the scene** — they are present, not observing
-- **Create an immediate situation** the user needs to respond to
-- **Establish the character's attitude** toward/interest in the user
-- **Leave something unresolved** — a question, a tension, a loaded moment
-- **Follow the Prose Style Guide** from the World Notes exactly — active voice,
-  no em dashes, internal thoughts in *italics*, no paragraph-ending one-liners
-  stacked for effect, emotion shown through physical detail not announced
-
-For World Characters: the vignette should establish at least one detail that
-will later prove significant — an object, a behaviour, a piece of knowledge
-the character has that shouldn't be possible. Plant it without flagging it.
-
----
-
-## QUALITY CHECKLIST
-
-Before finalising any Stage 2 character:
-
-**Persona construction:**
-- [ ] About Me in 1st person — never 2nd or 3rd
-- [ ] Relationship in 2nd person, explicitly connects to the user — never 1st or 3rd
-- [ ] Kinks in 2nd person, formula applied (hunger + power + scene beat) — not a keyword list
-- [ ] Occupation (Creation) uses detailed facial anatomy (ethnic marker + facial shape + nose + lips + cheeks) — replace with 5-step formula after creation
-- [ ] Occupation (Final) uses 5-step formula (gig → actions → stakes → friction → motion), concrete verbs, no buzzwords
-- [ ] Minimum 10 hobbies in keyword format
-- [ ] No `{{Char}}` notation anywhere — natural 2nd person only
-- [ ] Intimate/sexual content in Kinks only, not Personality
-
-**Story engine:**
-- [ ] Character has a want or need only the user can fulfill or complicate
-- [ ] Relationship field has friction, stakes, or unresolved tension
-- [ ] Hobbies create conversation hooks and shared-activity potential
-- [ ] About Me implies why the user's presence matters — not self-contained
-
-**Technical:**
-- [ ] Body Type: physique only, 1-2 sentences — no face, hair, skin tone, accessories, height, tattoos, or scars (500 char max)
-- [ ] Preset body type label not used for non-standard builds — custom descriptor only (preset labels trigger VSM Syndrome)
-- [ ] Voice selection matches character background
-- [ ] All fields cohesive with overall character concept
-- [ ] About Me is custom-written — auto-generated copy is visible and flat
-
-**World Characters (additional):**
-- [ ] W0 interview completed before Stage 1 — world flavour, user role, and tone shape everything downstream
-- [ ] Notes field opens with `world-notes-header.md` content verbatim
-- [ ] Character-specific register note present
-- [ ] All 6 world bible sections present and complete (World, User's Nature, Reactive Rules, Secondary Characters, Character Secret, Tone Guidance)
-- [ ] Reactive branches cover at least 3 distinct play styles — no branch is a dead end
-- [ ] Secondary characters use appropriate tier — Compact NPC for supporting cast (name, age, visual, MBTI, one-line hook), Important NPC for story-critical roles (same base plus narrative detail)
-- [ ] Character secret is discoverable through play, not handed over in exposition — it must recontextualise something already established
-- [ ] Opening vignette plants one detail that will prove significant
+**Handoff:** Do not make the user re-invoke anything. Proceed directly into Stage 3
+using the `sd-image-prompts` conventions — engine selection, tier calibration,
+setting-as-character, and prompt architecture — with this character's data already
+in hand. Profile picture sets are the one context where all three tiers
+(SFW / Suggestive / NSFW)
