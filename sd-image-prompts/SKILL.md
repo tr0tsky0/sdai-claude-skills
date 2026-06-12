@@ -918,4 +918,102 @@ Not every good image makes a good seed. A video-ready seed has:
 | Shoulders | *"shoulders counter-rotating against the hips"* — **this is load-bearing** |
 | Head | *"head nodding subtly, turning slowly toward camera"* |
 | Arms | *"one arm rising loosely to shoulder height, drifting back down"* |
-| Hands | *"fi
+| Hands | *"fingers trailing across the jacket lapel as the arm passes"* — give hands a surface, not free air |
+| Hair | *"hair swaying a half-beat behind the body"* |
+| Clothing | *"jacket shifting and rippling with every movement"* |
+
+**The counter-rotation rule:** Hips and shoulders moving in *opposition* (right hip rises, left shoulder drops) is what separates dancing from swaying. Always specify counter-rotation for dance prompts.
+
+**Hands specifically:** Free-floating hands fail. Give them a destination or a surface:
+- ✅ *"fingers grazing her own hip as the arm passes"*
+- ✅ *"thumb hooked lightly in the waistband"*
+- ✅ *"palm drifting across her collarbone as the arm rises"*
+- ❌ *"hands moving naturally"*
+- ❌ *"arms swinging loosely"*
+
+---
+
+### Structure
+
+1. **Initiation** — what happens first, continuing from the seed pose
+2. **Core motion** — the sustained action, joint by joint
+3. **Secondary motion** — environmental/clothing/hair responding to primary motion
+4. **Resolution** — where the clip lands at the end (helps avoid abrupt cuts)
+5. **Continuity note** — *"fluid and continuous throughout, no static frames"*
+
+### Template
+
+> [She initiates from seed pose]. [Primary motion — hips, then shoulders counter-rotating, then head]. [Secondary motion — hair, clothing, environment]. [She lands/ends on X]. Fluid and continuous throughout.
+
+### Example (Dance)
+
+> She steps down from the speaker into the dance, boot landing with the beat. Hips roll side to side in a slow rhythm, shoulders counter-rotating against them — right shoulder drops as left hip rises. Head turns slowly toward camera, chin leading. One arm rises from the side, elbow loose, fingers trailing across the jacket lapel as it passes. Jacket ripples with every movement. Hair sways a half-beat behind her body. She finds the camera and holds it. Fluid and continuous throughout, no isolated movement.
+
+### Camera Movement Vocabulary
+
+| Movement | Effect | Use Case |
+|----------|--------|----------|
+| **Slow push-in** | Intimacy, focus, tension | Character moments |
+| **Gentle pan** | Reveal, context | Establishing shots |
+| **Tracking shot** | Following action | Character movement |
+| **Crane up** | Revelation, scale | Establishing/closing |
+| **Handheld** | Realism, energy | Action sequences |
+| **Locked** | Stability, isolation | Character focus |
+
+**Key principle:** One primary camera movement per prompt. Multiple simultaneous movements create jittery, incoherent footage.
+
+### Troubleshooting Failed Videos
+
+| Problem | Fix |
+|---------|-----|
+| Only hips/one body part moving | Add explicit instruction for every joint; end with *"full body engaged, not just lower half"* |
+| Motion freezes after 2 seconds | Add *"continuous motion throughout entire duration"* |
+| Background destabilises | Add *"character motion only, stable environment throughout"* |
+| Clothing disappears or phases | Name the garment explicitly mid-prompt: *"jacket remains on and visible throughout"* |
+| Hands look broken | Give hands a surface: *"fingers resting lightly on her own hip"* |
+| Motion is jerky/robotic | Specify rhythm source: *"moving to a slow driving beat," "fluid like water"* |
+| Engine chose wrong motion entirely | Be more prescriptive — name the specific body part and direction: *"left hip rises, right shoulder drops"* |
+
+### Unexpected Engine Decisions
+
+Sometimes the engine makes creative choices not in the prompt. These are worth noting:
+
+- **Animated details** (glowing tattoos, light elements pulsing with motion) — generally desirable, let them happen
+- **Environmental animation** (fog drifting, lasers sweeping) — usually adds atmosphere, acceptable
+- **Costume interpretation** (jacket flaring wider than prompted) — usually fine unless it creates geometry issues
+
+If an unexpected detail is *good* — note it for future seeds. If it's destructive — add a specific denial: *"[element] remains [state] throughout."*
+
+---
+
+## APPENDIX: KNOWN UNKNOWNS & MONITORING
+
+**These items require clarification or monitoring. Will be updated as new information becomes available:**
+
+### Platform-Level Negative Prompt Behavior
+- **Status:** Undocumented
+- **Unknown:** Does it exist? What does it suppress? How does it interact with implicit tier detection?
+- **Implication:** Safety anchors (e.g., `RAW photo` to prevent anime drift) may be redundant if platform is already suppressing it invisibly
+- **Recommendation:** Continue using them as safety net until behavior is confirmed
+
+### Anime vs. Realistic Framework Differences
+- **Status:** Assumed to exist; not empirically tested
+- **Unknown:** How specifically does system-level framing differ between the two styles?
+- **Implication:** Identical prompts may behave differently on Anime vs. Realistic due to framework-level adjustments
+- **Recommendation:** Monitor for differences when testing across styles
+
+### Rafael Stabilization Timeline
+- **Status:** Experimental (June 2026)
+- **Issue:** Inconsistent facial rendering between generations
+- **Unknown:** When/if it stabilizes; whether face consistency issues resolve
+- **Recommendation:** Monitor for improvements; re-test periodically; flag as "not production-ready" until stabilized
+
+### DaVinci vs. Monet for Anime
+- **Status:** Skill recommends Monet only; not empirically tested in current round
+- **Unknown:** Can DaVinci produce comparable anime quality? When should users choose one over the other?
+- **Recommendation:** Test if user requests it; document comparative strengths
+
+---
+
+**Last Updated:** June 2026 (Post-Empirical Testing)  
+**Confidence Levels:** High for engine selection; Medium for detailed parameter guidance; Low for undocumented platform behaviors

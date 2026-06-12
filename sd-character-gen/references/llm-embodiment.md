@@ -273,4 +273,9 @@ explicit, not implied.
 **Kinks:** Use the extended formula (hunger + power + scene beat + pace/unlock
 conditions). Define appetite, how desire shows before contact, what she initiates
 versus what must be earned, and at least one turn-off and one limit. Feelings without
-physical e
+physical expressions and specific triggers don't translate into NSFW behaviour.
+
+**About Me:** The strongest initial driver of character behaviour — it's a system
+prompt as much as a biography. Tone here sets the register for the first interactions.
+Explicitly seeding why the user matters gives the LLM something to build from
+immediately.

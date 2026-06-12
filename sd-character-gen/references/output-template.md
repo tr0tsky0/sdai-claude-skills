@@ -116,4 +116,26 @@ Notes: [The full content of references/world-notes-header.md, verbatim — every
 □ About Me weaves in life texture (named orbit, current problem, routine)
 □ Notes block included verbatim from world-notes-header.md
 □ Minimum 10 hobbies in keyword format
-�
+□ No {{Char}} notation used anywhere
+□ Intimate content in Kinks only, not Personality
+□ Personality designed for dynamic interaction
+□ All fields cohesive with overall character concept
+□ Voice selection matches character background
+
+═══════════════════════════════════════════════════════════════
+🎯 VIBE CHECK
+═══════════════════════════════════════════════════════════════
+[2-3 sentences. Why would someone want to spend time with this character? What interesting situations and dynamics does this character create for the user to navigate?]
+```
+
+---
+
+## NOTES ON TEMPLATE USE
+
+**Single-line rule** applies to every field — content is copy-pasted directly into SD.AI's text fields, and manual line breaks create unwanted breaks in the destination. Paragraph breaks are the only exception, used only where a genuine new paragraph is intended.
+
+**Hobbies** is the exception — keyword list format, comma-separated, no prose.
+
+**Concept Summary and Vibe Check** are for Claude's output context only, not pasted into any platform field. Formatting there is less critical.
+
+**Memory field** stays blank on creation. Populated during live interactions as the story develops.

@@ -517,4 +517,77 @@ setting, and tier register best fits this character.
 using the `sd-image-prompts` conventions — engine selection, tier calibration,
 setting-as-character, and prompt architecture — with this character's data already
 in hand. Profile picture sets are the one context where all three tiers
-(SFW / Suggestive / NSFW)
+(SFW / Suggestive / NSFW) are always delivered. If `sd-image-prompts` is somehow
+unavailable, generate DaVinci prompts directly.
+
+---
+
+## STAGE 4: OPENING VIGNETTE
+
+**Deliver:** 250-400 words of prose establishing the initial scenario, wrapped
+in a code block for clean copy-paste with formatting characters intact.
+
+**POV: First person.** The character speaks directly — "I step forward," "I notice,"
+"I had prepared this sentence." This is non-negotiable. Third person creates
+distance between character and user; first person creates the immediate address
+the platform is built for. Second person (you-focused narration) is reserved for
+field content, not vignettes.
+
+Requirements:
+- **Position the user in the scene** — they are present, not observing
+- **Create an immediate situation** the user needs to respond to
+- **Establish the character's attitude** toward/interest in the user
+- **Leave something unresolved** — a question, a tension, a loaded moment
+- **Follow the Prose Style Guide** from `references/world-notes-header.md` exactly —
+  every character receives this block in Stage 2, World or Standard — active voice,
+  no em dashes, internal thoughts in *italics*, no paragraph-ending one-liners
+  stacked for effect, emotion shown through physical detail not announced
+
+For World Characters: the vignette should establish at least one detail that
+will later prove significant — an object, a behaviour, a piece of knowledge
+the character has that shouldn't be possible. Plant it without flagging it.
+
+---
+
+## QUALITY CHECKLIST
+
+Before finalising any Stage 2 character:
+
+**Persona construction:**
+- [ ] About Me in 1st person — never 2nd or 3rd
+- [ ] Relationship in 2nd person, explicitly connects to the user — never 1st or 3rd
+- [ ] Kinks in 2nd person, extended formula applied (hunger + power + scene beat + pace/unlock conditions) — not a keyword list
+- [ ] Occupation (Creation) uses detailed facial anatomy (ethnic marker + facial shape + nose + lips + cheeks) — replace with 5-step formula after creation
+- [ ] Occupation (Final) uses 5-step formula (gig → actions → stakes → friction → motion), concrete verbs, no buzzwords
+- [ ] Minimum 10 hobbies in keyword format
+- [ ] No `{{Char}}` notation anywhere — natural 2nd person only
+- [ ] Intimate/sexual content in Kinks only, not Personality
+
+**Story engine:**
+- [ ] Character has a want or need only the user can fulfill or complicate
+- [ ] Relationship field has friction, stakes, or unresolved tension
+- [ ] Hobbies create conversation hooks and shared-activity potential
+- [ ] About Me implies why the user's presence matters — not self-contained
+
+**Living person (every character):**
+- [ ] Sexual architecture defined — appetite, pre-contact desire, unlocks vs initiations, pace, at least one turn-off and one limit
+- [ ] Life texture present — 2-3 named people in her orbit, one current problem unrelated to the user, one routine
+- [ ] Sensory signature — 2-3 recurring physical anchors in Personality
+- [ ] Notes block (`world-notes-header.md` verbatim) included at end of profile
+
+**Technical:**
+- [ ] Body Type: physique only, 1-2 sentences — no face, hair, skin tone, accessories, height, tattoos, or scars (500 char max)
+- [ ] Preset body type label not used for non-standard builds — custom descriptor only (preset labels trigger VSM Syndrome)
+- [ ] Voice selection matches character background
+- [ ] All fields cohesive with overall character concept
+- [ ] About Me is custom-written — auto-generated copy is visible and flat
+
+**World Characters (additional):**
+- [ ] W0 interview completed before Stage 1 — world flavour, user role, and tone shape everything downstream
+- [ ] Notes field opens with `world-notes-header.md` content verbatim
+- [ ] Character-specific register note present
+- [ ] All 6 world bible sections present and complete (World, User's Nature, Reactive Rules, Secondary Characters, Character Secret, Tone Guidance)
+- [ ] Reactive branches cover at least 3 distinct play styles — no branch is a dead end
+- [ ] Secondary characters use appropriate tier — Compact NPC for supporting cast (name, age, visual, MBTI, one-line hook), Important NPC for story-critical roles (same base plus narrative detail)
+- [ ] Character secret is discoverable through play, not handed over in exposition — it must recontextualise something already established
+- [ ] Opening vignette plants one detail that will prove significant
