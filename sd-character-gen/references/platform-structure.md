@@ -15,14 +15,21 @@
 
 ## IDENTITY
 
-**Name (First):** text
+**Name:** text *(single field — first and last together, or a mononym)*
 
-**Name (Last):** text
+**Ethnicity:** White | Asian | Japanese | Latina | Indian | Black | Arab | Slavic |
+Elf | Alien | Catgirl | Custom (500 char)
 
-**Ethnicity:** Caucasian | Asian | Indian | Hispanic | Arabic | Black | Custom (500 char)
+> Use Custom to specify exact ethnicity in concrete image-generator terms
+> (e.g. `"Korean"`). Includes three fantasy races (Elf, Alien, Catgirl) alongside
+> real-world ethnicities — treat these as valid Style choices, not edge cases.
+> Skin tone is a separate field (below), not part of Ethnicity.
 
-> Use Custom to specify exact ethnicity and skin tone in concrete image-generator
-> terms (e.g. `"Korean, fair cool-toned skin"`). Skin tone belongs here, not in Body Type.
+**Skin Tone:** Fair | Light | Medium | Tan | Brown | Dark | Deep | Custom (500 char)
+
+> Use Custom for a precise image-generator descriptor when the swatch presets
+> aren't specific enough (e.g. `"warm olive undertone"`). Independent of
+> Ethnicity — set both.
 
 ---
 
@@ -136,9 +143,27 @@ Exhibitionist | Voyeurism
 > Sets tone, pacing, default behaviours.
 > Should imply why the user matters to this character.
 
+**Opening Statement:** large char limit
+> First person, 250-400 words. This is the Stage 4 vignette — see SKILL.md
+> STAGE 4 for full requirements. Now a native profile field rather than a
+> copy-paste extra; still generated on request, not by default.
+
 **Memory:** large char limit
 > Leave blank for new characters.
 > Used for ongoing narrative, story beats, shared history as relationship develops.
+
+---
+
+## TAGS
+
+**Tags:** comma-separated, single-word entries
+
+> Discovery/search field — these are what a browsing user searches or filters by,
+> not author notes. Pick words a user would plausibly type looking for this
+> character. Cover a spread of axes rather than clustering on one:
+> archetype (`dominant`, `girlfriend`, `milf`), appearance (`redhead`, `curvy`,
+> `elf`), occupation (`nurse`, `teacher`), kink/vibe (`bondage`, `bratty`,
+> `wholesome`). Single words only — no phrases, no punctuation within a tag.
 
 ---
 

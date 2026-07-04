@@ -26,11 +26,13 @@ Age:    [number, minimum 20]
 ═══════════════════════════════════════════════════════════════
 🎭 IDENTITY
 ═══════════════════════════════════════════════════════════════
-Name (First): [text]
-Name (Last):  [text]
+Name: [text — single field, first and last together or a mononym]
 
 Ethnicity: [Preset / Custom]
-  └─ Custom: [Concrete image-generator descriptors. Include skin tone here. Example: "Korean, fair cool-toned skin"]
+  └─ Custom: [Concrete image-generator descriptor, ethnicity only. Example: "Korean"]
+
+Skin Tone: [Preset / Custom]
+  └─ Custom: [Concrete image-generator descriptor. Example: "fair, cool-toned"]
 
 ═══════════════════════════════════════════════════════════════
 👁️ APPEARANCE
@@ -93,7 +95,14 @@ Kinks: [Preset name / Custom]
 ═══════════════════════════════════════════════════════════════
 About Me: [Continuous prose, 1st person, 200+ words. Character introduces themselves — life, personality, location, work, likes/dislikes, habits, goals. Weave in life texture: 2-3 named people in their orbit, one current problem unrelated to the user, one routine a scene can interrupt. Must reference or imply why the user matters to this character. Functions as biography AND system prompt for tone/pacing/default behaviour.]
 
+Opening Statement: [Only if requested — see Stage 4. First person, 250-400 words, wrapped in its own code block. Leave noted as "not generated — request Stage 4" otherwise.]
+
 Memory: [Leave blank for new characters.]
+
+═══════════════════════════════════════════════════════════════
+🏷️ TAGS
+═══════════════════════════════════════════════════════════════
+Tags: [Comma-separated, single-word entries. Discovery/search terms a browsing user would plausibly type — spread across archetype, appearance, occupation, and kink/vibe. Example: "dominant, redhead, curvy, nurse, bondage, bratty"]
 
 ═══════════════════════════════════════════════════════════════
 📝 NOTES FIELD
@@ -115,6 +124,7 @@ Notes: [The full content of references/world-notes-header.md, verbatim — every
 □ Personality includes a sensory signature (2-3 recurring physical anchors)
 □ About Me weaves in life texture (named orbit, current problem, routine)
 □ Notes block included verbatim from world-notes-header.md
+□ Tags are single-word, comma-separated, and spread across archetype/appearance/occupation/kink axes
 □ Minimum 10 hobbies in keyword format
 □ No {{Char}} notation used anywhere
 □ Intimate content in Kinks only, not Personality

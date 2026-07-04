@@ -107,7 +107,7 @@ and requires a **World Interview** before Stage 1. See WORLD CHARACTER section b
 | **1** — Narrative Hooks | Concept specs | 2-3 scenario premises establishing user's role |
 | **2** — Character Generation | Selected hook + specs | Complete character profile |
 | **3** — Profile Pictures | Character from Stage 2 | Three DaVinci image prompts, one per rating tier |
-| **4** — Opening Vignette *(optional)* | Request for scene-starter | 250-400 word prose scene |
+| **4** — Opening Vignette *(optional)* | Request for scene-starter | 250-400 word prose scene → Opening Statement field |
 
 ### World Character
 
@@ -118,7 +118,7 @@ and requires a **World Interview** before Stage 1. See WORLD CHARACTER section b
 | **2** — Character Generation | Selected hook + specs | Complete character profile |
 | **2W** — World Bible | Character from Stage 2 | Notes field: prose style guide + world architecture |
 | **3** — Profile Pictures | Character from Stage 2 | Three DaVinci image prompts, one per rating tier |
-| **4** — Opening Vignette *(optional)* | Request for scene-starter | 250-400 word prose scene |
+| **4** — Opening Vignette *(optional)* | Request for scene-starter | 250-400 word prose scene → Opening Statement field |
 
 Stages are discrete but flexible. Users can skip Stage 1 with a fully-formed concept,
 request multiple stages together, or revisit any stage for iteration.
@@ -276,12 +276,12 @@ Output the contents of `references/world-notes-header.md` verbatim as a labeled 
 
 #### Appearance Fields — Write for the Image Generator
 
-All appearance fields (Ethnicity, Eye Colour, Hair Style, Hair Colour, Body Type, Breast Size, Butt Size) feed directly into image prompts. When using Custom text, write concrete visual descriptors the image generator can act on. Prose belongs in Personality and About Me, not here.
+All appearance fields (Ethnicity, Skin Tone, Eye Colour, Hair Style, Hair Colour, Body Type, Breast Size, Butt Size) feed directly into image prompts. When using Custom text, write concrete visual descriptors the image generator can act on. Prose belongs in Personality and About Me, not here.
 
 - ✅ `"warm medium-brown skin"`, `"loose waves past the shoulder"`, `"slender frame, narrow waist"`
 - ❌ `"sun-kissed complexion"`, `"hair like a waterfall"`, `"a body that tells stories"`
 
-Skin tone belongs in Ethnicity (Custom), not Body Type.
+Skin tone has its own field (Skin Tone), not Body Type or Ethnicity. Ethnicity (Custom) describes ethnicity only.
 
 #### Body Type
 
@@ -308,7 +308,7 @@ All fields are sent to the image generator during initial PFP creation. The plat
 
 **What to include in the creation-phase anatomy prompt:**
 
-- **Ethnic marker with weight** — e.g. `(Korean:1.2)`, `(South Asian:1.1)` — more direct than the Ethnicity dropdown alone
+- **Ethnic marker with weight** — e.g. `(Korean:1.2)`, `(South Asian:1.1)` — more direct than the Ethnicity dropdown alone. For the fantasy Ethnicity presets (Elf, Alien, Catgirl), swap the ethnic marker for the racial marker instead — e.g. `(elf:1.2)` — and fold in the defining fantasy features (ear shape, iris quality, skin texture) alongside the anatomy list below
 - **Facial shape** — overall structure, proportions, chin projection, jawline curve
 - **Eyes** — eye shape (almond, round, hooded, monolid, etc.), lid type, brow shape and thickness, lash character; Eye Colour has its own field but everything else must be set here
 - **Nose** — bridge height, radix position, dorsal line definition, tip shape and rotation, nostril size and flare; earns its length for non-Western features especially
@@ -337,6 +337,10 @@ All fields are sent to the image generator during initial PFP creation. The plat
 - `"Pornstar"` → sultry, bold features
 - `"Nun"` → simple, plain features
 - `"Shipwrecked Survivor"` → rough, scarred appearance
+
+#### Tags — Discovery, Not Description
+
+Tags are how a browsing user finds this character, not a place for author notes or restated field content. Write single words spanning a few different axes — archetype, appearance, occupation, kink/vibe — rather than five synonyms for the same trait. See `references/platform-structure.md` for the full guidance and example.
 
 ---
 
@@ -525,7 +529,8 @@ unavailable, generate DaVinci prompts directly.
 ## STAGE 4: OPENING VIGNETTE
 
 **Deliver:** 250-400 words of prose establishing the initial scenario, wrapped
-in a code block for clean copy-paste with formatting characters intact.
+in a code block for clean copy-paste with formatting characters intact. This
+pastes directly into SD.AI's native **Opening Statement** field.
 
 **POV: First person.** The character speaks directly — "I step forward," "I notice,"
 "I had prepared this sentence." This is non-negotiable. Third person creates
@@ -562,6 +567,7 @@ Before finalising any Stage 2 character:
 - [ ] Minimum 10 hobbies in keyword format
 - [ ] No `{{Char}}` notation anywhere — natural 2nd person only
 - [ ] Intimate/sexual content in Kinks only, not Personality
+- [ ] Tags: single-word, comma-separated, spread across archetype/appearance/occupation/kink axes — not a pile of synonyms for one trait
 
 **Story engine:**
 - [ ] Character has a want or need only the user can fulfill or complicate
